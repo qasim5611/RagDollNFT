@@ -18,8 +18,8 @@ import Resetpass from "./components/Forgotpass/ResetPass";
 
 import VerifyTockenMail from "./components/Forgotpass/VerifyTockenMail";
 
-import Admin from "./components/Admin/Admin";
-import User from "./components/User/User";
+// import Admin from "./components/Admin/Admin";
+// import User from "./components/User/User";
 import BlogPage from './components/blogPage/blog';
 
 import PrivateRoute from './components/PrivateRoutes/PrivateRoute.js';
@@ -62,8 +62,8 @@ function App() {
       <BrowserRouter history={history} forceRefresh={true}>
         <Routes>
           <Route path="/*" element={<HomeComponent />} />
-          <Route path="/userDashboard/*" element={<User />} />
-          <Route path="/adminDashboard/*" element={<Admin />} />
+          {/* <Route path="/userDashboard/*" element={<User />} />
+          <Route path="/adminDashboard/*" element={<Admin />} /> */}
         </Routes>
         <SrollButton />
       </BrowserRouter>

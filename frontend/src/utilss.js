@@ -15,9 +15,9 @@ export const logout = () => {
 
 export const isLogin = () => {
     
-//   if (cookies.get("jwtToken")) {
-//     return true;
-//   }
+  if (cookies.get("jwtToken")) {
+    return true;
+  }
 
   return false;
 };

@@ -1,57 +1,114 @@
-import express from "express";
+const express = require("express");
+const { v4: uuidv4 } = require("uuid");
+require("dotenv").config();
+const connectDatabase = require("./config/connection");
 
-import user from "./src/routes/api/userRoutes/user.Route.js";
+const app = express();
+const path = require("path");
+const cors = require("cors");
 
-import errorHandler from "./src/middlewares/errorHandler.js"
-import cookieParser from "cookie-parser" ;
-import cors from "cors";
+app.use(cors());
 
-import mongoose from "mongoose";
+var bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-// cache
-import {clearHash} from "./src/controllers/cachingControllers/redis.Controller.js";
-
-
-
-
-const app =  express();
-
-app.use(cookieParser());
-
-// allow cors requests from any origin and with credentials
-app.use(cors({ origin: (origin, callback) => callback(null, true), credentials: true }));
-
-// database connections
-// connectDatabase();
-// const db = require("./src/config/databaseConnection").mongoURI;
-// import db from "./src/config/databaseConnection";
-
-// Connect to MongoDB
-let db =
-  "mongodb+srv://serverBoiler:BrxyutmzqiCM4U6c@cluster0.t30x6.mongodb.net/RagdollCatServer?retryWrites=true&w=majority";
-
-mongoose
-  .connect(db)
-  // .then(() => console.log("MongoDB Connected"))
-  .then((res) => console.log(`Db connected on ${res.connection.user}`))
-  .catch((err) => console.log(err));
+const _dirname = path.resolve();
+app.use("uploads", express.static(path.join(_dirname, "uploads")));
 
 
 
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination(req, file, cb) {
+    cb(null, "uploads");
+  },
+  filename(req, file, cb) {
+    cb(null, uuidv4() + "." + file.mimetype.split("/")[1]);
+  },
+});
 
 
-// checkConnection();
+var upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    if (
+      // file.mimetype == "image/png" ||
+      // file.mimetype == "image/jpg" ||
+      // file.mimetype == "image/jpeg" ||
+      // file.mimetype == "video/webm" ||
+      // file.mimetype == "video/mp4" ||
+      // file.mimetype == "video/mav"
 
-// api routes
-app.use(express.json());
-app.use("/user", user);
+      file
+    ) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+      // return cb(new Error("Only .png, .jpg and .jpeg format allowed!"));
+      return cb(new Error("File is required"));
+    }
+  },
+});
+
+app.use("/uploads", express.static(path.join(_dirname, "uploads")));
 
 
-// error handling middleware
-// app.use(errorHandler);
+
+// Sign Up
 
 
-const PORT = process.env.port || 5000;
+// Form Data
+
+let Article = require("./routes/form/Article");
+
+// app.post("/api/award/create", upload.single("image"), Award.Create);
+app.post("/saveArticle", upload.single("image"), Article.save_article);
+
+app.post("/upvoteCounter", Article.upvote_count);
+
+app.post("/CheckIsVoted", Article.isuser_voted);
+
+
+app.post("/downvoteCounter", Article.downvote_count);
+
+
+// app.post("/upvoteCounter", Article.upvote_count);
+
+// app.post("/Saveformdata", upload.single("image"), Article.create_form);
+
+// app.post("/update", upload.single("image"), Article.gupdate_form);
+
+// app.post("/deleteidBase", Article.del_form);
+
+app.get("/getArticle", Article.get_article);
+
+// User SignUp
+
+let Authenticate = require("./routes/form/Autherize/autherize");
+
+
+app.post("/register", Authenticate.register);
+app.get("/verify-email", Authenticate.verifyEmail);
+app.post("/authenticate", Authenticate.authenticate);
+app.post("/forgot-password", Authenticate.forgotPassword);
+app.post("/VerifyTokenforpass", Authenticate.verifyCode);
+
+app.post("/resetpassword", Authenticate.resetPassword);
+
+// User SignIn by Auth
+// let Signin = require("./routes/form/signIn/signin");
+// app.post("/authuserCredentl", Signin.auth_user);
+
+
+app.use(express.static("./build"));
+app.use("*", (req, res) => {
+  res.sendFile("./build/index.html");
+});
+
+connectDatabase();
+const PORT = process.env.PORT || 8072;
 app.listen(PORT, function () {
   console.log("server is started on port " + PORT);
 });

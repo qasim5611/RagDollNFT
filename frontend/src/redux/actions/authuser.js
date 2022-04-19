@@ -37,7 +37,7 @@ export function resetpassw(body) {
     console.log("body", body);
 
     axios
-      .post(API + "/user/resetpassword", body)
+      .post(API + "/resetpassword", body)
       .then((resp) => {
         // successFul("success");
         console.log(resp.data);
@@ -88,7 +88,7 @@ export function signupdata(body) {
     console.log("body", body);
 
     axios
-      .post(API + "/user/register", body)
+      .post(API + "/register", body)
       .then((resp) => {
         console.log(resp.data.msg);
         if (resp.data.msg === "Email Already Exist") {
@@ -164,7 +164,7 @@ export function VerifyTokenForPass(body) {
     console.log("body", body);
 
     axios
-      .post(API + "/user/VerifyTokenforpass", body)
+      .post(API + "/VerifyTokenforpass", body)
       .then((resp) => {
         // successFul("success");
         console.log(resp.data);
@@ -213,7 +213,7 @@ export function authuser(body) {
     console.log("body", body);
 
     axios
-      .post(API + "/user/authenticate", body)
+      .post(API + "/authenticate", body)
       .then((resp) => {
         // successFul("success");
       console.log("resp.data", resp.data);
@@ -291,7 +291,7 @@ export function forgotpass(body) {
     console.log("body", body);
 
     axios
-      .post(API + "/user/forgot-password", body)
+      .post(API + "/forgot-password", body)
       .then((resp) => {
         // successFul("success")
         console.log("resp.data", resp);
