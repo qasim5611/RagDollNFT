@@ -19,7 +19,11 @@ var jwt = require("jsonwebtoken");
 
 const sendVerificationEmail = require("./../../Emailer/sendmail");
 
-const sendPasswordResetEmail = require("./../../Emailer/passreset");
+const sendEmail = require("./../../Emailer/passreset");
+
+
+
+
 const { constants } = require("buffer");
 
 
@@ -34,6 +38,15 @@ var code = Math.floor(100000 + Math.random() * 900000);
 const Auth = {
   // import sendEmail from "./../../services/EmailSender/sendmail";
 
+
+  showOther: async function (req, res) {
+      res.sendFile(path.join(__dirname, "./../../../build/index2.html"), function (err) {
+        if (err) {
+         return res.status(500).send(err);
+        }
+      });
+
+  },
 
   register: async function (req, res) {
     console.log(req.body.name);
@@ -76,6 +89,7 @@ const Auth = {
       msg: "Verify your mail Now Plz",
     });
   },
+  
 
   verifyEmail: async function (req, res) {
     try {
@@ -224,17 +238,14 @@ const Auth = {
         }
       );
 
-      sendPasswordResetEmail(user.email, user.name, code);
+   await sendEmail(user.email, user.name, code);
 
-      console.log("sendEmail", code);
-
-      // let mailret = user.email;
-      // console.log("mailret", mailret);
-
+     
       return res.send({
         msg: "Cool Email Found, Redirecting to Change Password",
         user,
       });
+     
 
       // return res.send({
       //   msg: "Cool Email Found, Redirecting to Change Password",

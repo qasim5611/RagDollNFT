@@ -126,19 +126,18 @@ const cookies = new Cookies();
 
     case LOGOUT:
       // localStorage.removeItem("token");
-      // cookies.remove("jwtToken");
+      cookies.remove("jwtToken");
       
-      cookies.remove("jwtToken", { path: "/", domain: "localhost" });  
+      // cookies.remove("jwtToken", { path: "/", domain: "gaddollcat.herokuapp.com" });  
       // removeCookie("jwtToken");
       // state.userDetail = null;
       // state.userInfo = null;
       // state.TokenMsg = "";
       // state.ErrMsg = "";
-
       // state.data = "";
 
       // setTimeout(() => {
-      //    navigate("/", { replace: true });
+      //    navigate("/", { replace: true });s
       // });
 
       break;

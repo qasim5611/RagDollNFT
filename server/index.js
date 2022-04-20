@@ -61,6 +61,7 @@ app.use("/uploads", express.static(path.join(_dirname, "uploads")));
 
 // Form Data
 
+
 let Article = require("./routes/form/Article");
 
 // app.post("/api/award/create", upload.single("image"), Award.Create);
@@ -97,14 +98,19 @@ app.post("/VerifyTokenforpass", Authenticate.verifyCode);
 
 app.post("/resetpassword", Authenticate.resetPassword);
 
-// User SignIn by Auth
-// let Signin = require("./routes/form/signIn/signin");
-// app.post("/authuserCredentl", Signin.auth_user);
 
+// app.get("/*", function (req, res) {
+//   res.sendFile(path.join(__dirname, "./build/index2.html"), function (err) {
+//     if (err) {
+//       res.status(500).send(err);
+//     }
+//   });
+// });
 
 app.use(express.static("./build"));
+
 app.use("*", (req, res) => {
-  res.sendFile("./build/index.html");
+  res.sendfile("./build/index.html");
 });
 
 connectDatabase();

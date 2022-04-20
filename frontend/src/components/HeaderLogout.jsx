@@ -91,7 +91,8 @@ const dispatch = useDispatch();
 
 const logoutUser = () => {
   // dispatch(logoutuser());
-     cookies.remove("jwtToken", { path: "/", domain: "localhost" });
+    //  cookies.remove("jwtToken", { path: "/", domain: "gaddollcat.herokuapp.com" });
+     cookies.remove("jwtToken");
     
 
      setTimeout(() => {

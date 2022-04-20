@@ -235,6 +235,7 @@ const Signup = () => {
                 sx={{ ml: 1, flex: 1, color: "#903800" }}
                 placeholder="Enter Your Email"
                 onChange={handleChange("email")}
+                type="email"
               />
             </Paper>
             <center>

@@ -2,28 +2,22 @@ const nodemailer = require("nodemailer");
 
 // let testAccount = await nodemailer.createTestAccount();
 
+var smtpTransport = nodemailer.createTransport({
+  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 587,
+  // ssl:     true,
+  secure: false,
+  requireTLS: true,
+  auth: {
+    user: "qasimtahir5611@gmail.com",
+    pass: "Qasim@1048576",
+  },
+});
 
-
-const sendPasswordResetEmail = async (email, name, code) => {
-  console.log(name);
-  console.log(email);
-  console.log(code);
-
-  var smtpTransport = nodemailer.createTransport({
-    //  service: "gmail",
-    host: "smtp.gmail.com",
-    port: 587,
-    // ssl:     true,
-    secure: false,
-    //  requireTLS: true,
-    auth: {
-      user: "qasimtahir5611@gmail.com",
-      pass: "Qasim@1048576",
-    },
-    //  tls: { rejectUnauthorized: false },
-  });
+const sendmail = async (email, name, code) => {
   console.log("code", code);
-  const mailOptions = {
+  mailOptions = {
     from: `"Verify Your Accout by Token" <qasimtahir5611@gmail.com>`,
     to: `${email}`,
     subject: "Please Vrifiy your Email account",
@@ -31,7 +25,6 @@ const sendPasswordResetEmail = async (email, name, code) => {
      <h3 style="font-family: cursive">Hy ${name} TechSchema wansts to Verify your Email by Token... </h3>
      <h3>${code}</h3>`,
   };
-
   console.log(mailOptions);
   smtpTransport.sendMail(mailOptions, function (error, response) {
     if (error) {
@@ -42,6 +35,5 @@ const sendPasswordResetEmail = async (email, name, code) => {
       return response;
     }
   });
-
 };
-module.exports = sendPasswordResetEmail;
+module.exports = sendmail;
