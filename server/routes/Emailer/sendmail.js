@@ -25,7 +25,7 @@ const sendVerificationEmail = async (user,origin) => {
    });
 
    var smtpTransport = nodemailer.createTransport({
-    //  service: "gmail",
+     service: "gmail",
      host: "smtp.gmail.com",
      port: 587,
      // ssl:     true,
@@ -35,7 +35,7 @@ const sendVerificationEmail = async (user,origin) => {
        user: "qasimtahir5611@gmail.com",
        pass: "Qasim@1048576",
      },
-    //  tls: { rejectUnauthorized: false },
+     tls: { rejectUnauthorized: false },
    });
 
    // await sendmail(message, user, origin);

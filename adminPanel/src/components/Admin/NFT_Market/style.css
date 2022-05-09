@@ -1,0 +1,21 @@
+/* input.form-control.dragdrop::after{
+    content: "Drag And Drop Here";
+    height: 20px;
+    width: 30px;
+    background: red;
+    position: relative;
+    top: -47px;
+    left: 63px;
+    color: #037dff;
+    text-decoration: underline;
+} */
+
+
+.uploadArea{
+    position: relative;
+    top: 64px;
+    color: red;
+    /* margin: 0px auto; */
+    width: 100%;
+    text-align: center;
+}

@@ -27,14 +27,10 @@ import API from "../url";
 
 
 
-
-
-
 export function resetpassw(body) {
   return (dispatch) => {
-    // let token = localStorage.getItem("token");
 
-    console.log("body", body);
+    // console.log("body", body);
 
     axios
       .post(API + "/resetpassword", body)
@@ -43,7 +39,7 @@ export function resetpassw(body) {
         console.log(resp.data);
 
         if (resp.data.msg === "Password Updated") {
-          // console.log("Toaster");
+    
           toast.success("Password Updated, You can Login Now!", {
             position: "top-right",
             autoClose: 5000,
@@ -91,35 +87,18 @@ export function signupdata(body) {
       .post(API + "/register", body)
       .then((resp) => {
         console.log(resp.data.msg);
-        if (resp.data.msg === "Email Already Exist") {
-          // console.log("Toaster");
-          toast.info("Sorry, Email Already Exist!", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-        }
-           else if (resp.data.msg === "Verify your mail Now Plz") {
-               // console.log("Toaster");
-               toast.info("Registered Successfully!, Check your mail for verification", {
-                 position: "top-right",
-                 autoClose: 5000,
-                 hideProgressBar: false,
-                 closeOnClick: true,
-                 pauseOnHover: true,
-                 draggable: true,
-                 progress: undefined,
-               });
-             }
-        ;
-        // dispatch({
-        //   type: DUPERR_MSG,
-        //   payload: { data: resp.data },
-        // });
+      
+        dispatch({
+          type: DUPERR_MSG,
+          payload: { data: resp.data },
+        });
+
+            setTimeout(function () {
+              dispatch({
+                type: DUPERR_MSG,
+                payload: { data: "" },
+              });
+            }, 2000); 
       })
       .catch((err) => {
         console.log(err);
@@ -219,60 +198,27 @@ export function authuser(body) {
       console.log("resp.data", resp.data);
 
       console.log("resp.data", resp.data.msg);
-      if (resp.data.msg == "NOT Verified, Check Mail, We Already Have Send you Email"){
-        toast.info("Not verified yet, Check Your Email", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+     
+      if (resp.data.msg == "Login Successfull") {
+        dispatch({
+          type: DATA_LOGIN,
+          payload: resp.data,
         });
       }
-      else if (resp.data.msg == "Not available email") {
-        toast.error("Email Not Found", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-      }
-        else if (resp.data.msg == "Login Successfull") {
-          
-          toast.success("Login Successfull", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-          dispatch({
-            type: DATA_LOGIN,
-            payload: resp.data,
-          });
-           
-        }
-        else if (resp.data.msg == "Password Not Correct") {
-           
-          toast.error("Password Not Correct", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-          
-        }
         
-      
+      dispatch({
+        type: MSG_LOGINS,
+        payload: resp.data,
+      });
+
+      setTimeout(function () {
+        dispatch({
+          type: MSG_LOGINS,
+          payload: "",
+        });
+      }, 2000); 
+
+     
   
       })
       .catch((err) => {

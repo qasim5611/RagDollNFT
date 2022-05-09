@@ -1,18 +1,22 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Divider from "@mui/material/Divider";
-import { Button } from "@mui/material";
+import {
+  Box,
+  Container,
+  Divider,
+  Typography,
+  useMediaQuery
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
-import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import MuiAccordion from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import BelowHead from "../belowHead/belowHead";
+import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
+import "swiper/swiper.min.css";
+import { Autoplay, Navigation } from "swiper";
+import "swiper/modules/pagination/pagination.min.css";
+import { HashLink } from "react-router-hash-link";
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -51,6 +55,15 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 export default () => {
+  const banner = [
+    "banner 1",
+    "banner 2",
+    "banner 3",
+    "banner 4",
+    "banner 5",
+    "banner 6"
+  ];
+  const matches1 = useMediaQuery("(min-width:1050px)");
   let faqs = [
     "What is Ragdoll Cat?",
     "What is Ragdoll Cat NFT?",
@@ -66,9 +79,9 @@ export default () => {
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
-  React.useEffect(()=>{
-    window.scrollTo(0,0)
-},[])
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <Box>
       <Box
@@ -140,6 +153,47 @@ export default () => {
               );
             })}
           </Box>
+        </Container>
+
+        <Container>
+          <HashLink to="/#BuyRDC" smooth>
+            <Swiper
+              slidesPerView={1}
+              slidesPerGroup={1}
+              loop={true}
+              navigation={{
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev"
+              }}
+              autoplay={{
+                delay: 2500
+              }}
+              modules={[Navigation, Autoplay]}
+              className="mySwiper"
+            >
+              {banner.map((image) => {
+                return (
+                  <SwiperSlide>
+                    <Box
+                      mt={5}
+                      display={matches1 ? "flex" : "none"}
+                      justifyContent="center"
+                    >
+                      <img src={`/images/970x90/${image}.jpg`} />
+                    </Box>
+
+                    <Box
+                      mt={5}
+                      justifyContent="center"
+                      display={matches1 ? "none" : "flex"}
+                    >
+                      <img src={`/images/730x90/${image}.jpg`} width="100%" />
+                    </Box>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          </HashLink>
         </Container>
       </Box>
     </Box>

@@ -5,12 +5,17 @@ import { Button } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Marquee from "react-fast-marquee";
 
-export default () => {
+export default (props) => {
+
+  console.log('props At BelowHead');
+  console.log(props);
+
+
   return (
     <Box>
       <Box
         style={{
-          backgroundImage: "linear-gradient(to right, #FF8606, #FF6503)"
+          backgroundImage: "linear-gradient(to right, #FF8606, #FF6503)",
         }}
         pt={2}
         pb={2}
@@ -29,7 +34,7 @@ export default () => {
                   fontSize: { xs: "11px", sm: "13px", md: "14px" },
                   fontFamily: "Helvetice-Bold",
                   boxShadow: 4,
-                  color: "white"
+                  color: "white",
                 }}
               >
                 updates <ArrowForwardIosIcon fontSize="16" />
@@ -39,7 +44,8 @@ export default () => {
                   fontSize={{ xs: "12px", md: "14px" }}
                   fontFamily="Helvetice-Bold"
                 >
-                  Welcome To Ragdoll Cat NFT, Our Own Project Token (RDC).
+                  {props.tag}
+                  {/* Welcome To Ragdoll Cat NFT, Our Own Project Token (RDC).
                   Project Utilities: NFT Marketplace, To Buy/Sell & Collect NFT
                   For A Better Future. Live Cat Marketplace, To Buy/Sell Cats
                   Worldwide With Your Buyers/Sellers. Cat Lovers Community, A
@@ -50,7 +56,7 @@ export default () => {
                   Phase-1 Price: 1 Bnb = 15,000,000. Phase-2 Price: 1 Bnb =
                   14,000,000. Phase-3 Price: 1 Bnb = 13,000,000. Public Presale
                   Price On Pinksale: 1 Bnb = 12,000,000. Launching Price On
-                  Pancakeswap: 1 Bnb = 10,000,000. Thank You.
+                  Pancakeswap: 1 Bnb = 10,000,000. Thank You. */}
                 </Box>
               </Marquee>
             </Box>

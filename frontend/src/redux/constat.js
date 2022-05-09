@@ -45,3 +45,11 @@ export let UPVOTE_SET = "UPVOTE_SET";
 export let DOWNVOTE_SET = "DOWNVOTE_SET";
 
 export let ISUSER_VOTED = "ISUSER_VOTED";
+
+//////////////////////////////////////////////
+export let SET_SNACKBAR = "SET_SNACKBAR";
+export let SITE_GENRL = "SITE_GENRL";
+export let GETSITE_GENRL = "GETSITE_GENRL";
+export let SITE_SOCIALS = "SITE_SOCIALS";
+export let LOGOUT_USER = "LOGOUT_USER";
+

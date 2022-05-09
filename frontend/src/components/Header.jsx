@@ -1,12 +1,10 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Container from "@mui/material/Container";
 import Hidden from "@mui/material/Hidden";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Button from "@mui/material/Button";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
 import Box from "@mui/material/Box";
 import { makeStyles } from "@mui/styles";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -19,6 +17,14 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { styled } from "@mui/material/styles";
+import MuiAccordion from "@mui/material/Accordion";
+import MuiAccordionSummary from "@mui/material/AccordionSummary";
+import MuiAccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
+import API from "./../redux/url.js";
+import { getgnrldata } from "./../redux/actions/adminDash_action.js";
 
 import { Link } from "react-router-dom";
 //----------dropdown code -----------
@@ -26,46 +32,46 @@ const StyledMenu = styled((props) => (
   <Menu
     anchorOrigin={{
       vertical: "bottom",
-      horizontal: "right"
+      horizontal: "right",
     }}
     transformOrigin={{
       vertical: "top",
-      horizontal: "right"
+      horizontal: "right",
     }}
     {...props}
   />
 ))(({ theme }) => ({
   "& .MuiPaper-root": {
     borderRadius: 6,
-    minWidth: 180,
+    minWidth: 160,
     color: "white",
     backgroundImage: "linear-gradient(to bottom right, #FF6503, #FF8105)",
 
     boxShadow:
       "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
     "& .MuiMenu-list": {
-      padding: "4px 0"
-    }
-  }
+      padding: "4px 0",
+    },
+  },
 }));
 // -----End o code of option dropdown--------
 
 const useStyles = makeStyles({
   list: {
-    width: 250
+    width: 250,
   },
   fullList: {
     width: "auto",
-    alignItems: "center"
+    alignItems: "center",
   },
   paper: {
     backgroundImage: "linear-gradient(to bottom right, #FF6503, #FF8105)",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   hover: {
     "&:hover": {
-      color: "#FFB800"
-    }
+      color: "#FFB800",
+    },
   },
 
   listText: {
@@ -73,12 +79,60 @@ const useStyles = makeStyles({
     textDecoration: "none",
     cursor: "pointer",
     color: "#ffffff",
-    fontSize: "16px",
-    fontFamily: "Helvetice-Bold"
-  }
+    fontSize: "15px",
+    fontFamily: "Helvetice-Bold",
+  },
 });
 
+const Accordion = styled((props) => (
+  <MuiAccordion disableGutters elevation={0} square {...props} />
+))(({ theme }) => ({
+  border: `1px solid ${theme.palette.divider}`,
+  "&:not(:last-child)": {
+    borderBottom: 0,
+  },
+  "&:before": {
+    display: "none",
+  },
+}));
+
+const AccordionSummary = styled((props) => (
+  <MuiAccordionSummary
+    expandIcon={<ExpandMoreIcon sx={{ fontSize: "1.5rem", color: "white" }} />}
+    {...props}
+  />
+))(({ theme }) => ({
+  backgroundColor:
+    theme.palette.mode === "dark"
+      ? "rgba(255, 255, 255, .05)"
+      : "rgba(0, 0, 0, .03)",
+  flexDirection: "row",
+  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+    transform: "rotate(90deg)",
+  },
+  "& .MuiAccordionSummary-content": {
+    marginLeft: theme.spacing(1),
+  },
+}));
+
+const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+  padding: theme.spacing(2),
+  borderTop: "1px solid rgba(0, 0, 0, .125)",
+}));
+
 export default function Header() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+
+    let obj = {
+      name: "qasim",
+      email: "fcdfr",
+    };
+    dispatch(getgnrldata(obj));
+  }, []);
+
   const { account, connect, disconnect } = useContext(AppContext);
   // ------code for options dropdowns ----------
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -116,12 +170,59 @@ export default function Header() {
   const handleClose4 = () => {
     setAnchorE4(null);
   };
+
+  // five option
+  const [anchorE5, setAnchorE5] = React.useState(null);
+  const open5 = Boolean(anchorE5);
+  const handleClick5 = (event) => {
+    setAnchorE5(event.currentTarget);
+  };
+  const handleClose5 = () => {
+    setAnchorE5(null);
+  };
   // ---------End of dropdown code-------
   const classes = useStyles();
   const [state, setState] = React.useState({
-    left: false
+    left: false,
   });
+  const QuickLinks = [
+    "NFT Marketplace",
+    "Tokenomics",
+    "Public Presale",
+    "Dev Team",
+    "Blog",
+    "About",
+    "Private Presale",
+    "Listings",
+    "Road Map",
+  ];
+  const communityLinks = [
+    "https://twitter.com/RDCNFT",
+    "https://t.me/RDCNFT",
+    "https://www.facebook.com/groups/rdcnft/",
+    "https://www.instagram.com/rdcnftofficial/",
+    "https://www.youtube.com/channel/UCykM-9k39J8ddOMdiaxX0zg",
+    "https://bitcointalk.org/index.php?topic=5394849",
+  ];
+  const Documents = ["FAQ", "Business", "Logo"];
+  const community = [
+    "Twitter",
+    "Telegram",
+    "Facebook",
+    "Instagram",
+    "YouTube",
+    "Bitcointalk",
+  ];
+  const utility = [
+    "Live Cat Marketplace",
+    "Cat Lovers Community",
+    "Stake & Earn",
+  ];
+  const [expanded, setExpanded] = React.useState("false");
 
+  const handleChange = (panel) => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  };
   const matches = useMediaQuery("(max-width:960px)");
   const matches1 = useMediaQuery("(max-width:1279px)");
 
@@ -138,10 +239,9 @@ export default function Header() {
   const list = (anchor) => (
     <div
       className={clsx(classes.list, {
-        [classes.fullList]: anchor === "top" || anchor === "bottom"
+        [classes.fullList]: anchor === "top" || anchor === "bottom",
       })}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <Box mt={-20} display="flex" justifyContent="center">
@@ -149,70 +249,231 @@ export default function Header() {
           <img width="100px" src="/images/logo.png" alt="" />
         </HashLink>
       </Box>
-      <List>
-        {/* {["HOME", "QUICKS LINKS", "UTILITIES", "DOCUMENTS", "COMMUNITY"].map(
-          (text, index) => ( */}
-        <ListItem
-          button
-          style={{
-            justifyContent: "center"
-          }}
-          // key={text}
-        >
-          <HashLink smooth to="/home#home" style={{ textDecoration: "none" }}>
-            <ListItemText className={classes.listText} primary={"HOME"} />
-          </HashLink>
-        </ListItem>
 
-        <ListItem
-          button
-          style={{
-            justifyContent: "center"
-          }}
-        >
-          <HashLink smooth to="/home#about" style={{ textDecoration: "none" }}>
-            <ListItemText
-              className={classes.listText}
-              primary={"QUICK LINKS"}
-            />
-          </HashLink>
-        </ListItem>
+      <HashLink
+        smooth
+        to="/home#home"
+        style={{ textDecoration: "none", color: "white" }}
+      >
+        <Box mt={3} pl={3} onClick={toggleDrawer(anchor, false)}>
+          Home
+        </Box>
+      </HashLink>
 
-        <ListItem
-          button
-          style={{
-            justifyContent: "center"
-          }}
+      <Accordion
+        expanded={expanded === `panel${1}`}
+        onChange={handleChange(`panel${1}`)}
+        sx={{
+          fontFamily: "Helvetica-Bold",
+          backgroundColor: "transparent",
+          boxShadow: "none",
+          color: "white",
+          marginTop: "10px",
+        }}
+      >
+        <AccordionSummary
+          aria-controls={`panel${1}d-content`}
+          id={`panel${1}d-header`}
         >
+          <Typography>QuickLinks</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          {QuickLinks.map((value) => {
+            return (
+              <HashLink
+                to={`/home#${value}`}
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                <Box
+                  onClick={toggleDrawer(anchor, false)}
+                  sx={{ fontFamily: "Helvetice-Bold" }}
+                >
+                  {value}
+                </Box>
+              </HashLink>
+            );
+          })}
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion
+        expanded={expanded === `panel${2}`}
+        onChange={handleChange(`panel${2}`)}
+        sx={{
+          fontFamily: "Helvetica-Bold",
+          background: "transparent",
+          color: "white",
+          marginTop: "10px",
+        }}
+      >
+        <AccordionSummary
+          aria-controls={`panel${2}d-content`}
+          id={`panel${1}d-header`}
+        >
+          <Typography>Utilities</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <HashLink
+            to="/home#Token Info"
+            style={{ textDecoration: "none", color: "white" }}
+          >
+            <Box
+              onClick={toggleDrawer(anchor, false)}
+              sx={{ fontFamily: "Helvetice-Bold" }}
+            >
+              RDC Token
+            </Box>
+          </HashLink>
+          <HashLink
+            to="/home#NFT Marketplace"
+            style={{ textDecoration: "none", color: "white" }}
+          >
+            <Box
+              onClick={toggleDrawer(anchor, false)}
+              sx={{ fontFamily: "Helvetice-Bold" }}
+            >
+              NFT Marketplace
+            </Box>
+          </HashLink>
+          {utility.map((value) => {
+            return (
+              <HashLink
+                to="/home#rogdollcatnft"
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                <Box
+                  onClick={toggleDrawer(anchor, false)}
+                  sx={{ fontFamily: "Helvetice-Bold" }}
+                >
+                  {value}
+                </Box>
+              </HashLink>
+            );
+          })}
+          <HashLink
+            to="/home#Blog"
+            style={{ textDecoration: "none", color: "white" }}
+          >
+            <Box
+              onClick={toggleDrawer(anchor, false)}
+              sx={{ fontFamily: "Helvetice-Bold" }}
+            >
+              Blog Post
+            </Box>
+          </HashLink>
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion
+        expanded={expanded === `panel${3}`}
+        onChange={handleChange(`panel${3}`)}
+        sx={{
+          fontFamily: "Helvetica-Bold",
+          background: "transparent",
+          color: "white",
+          marginTop: "10px",
+        }}
+      >
+        <AccordionSummary
+          aria-controls={`panel${3}d-content`}
+          id={`panel${1}d-header`}
+        >
+          <Typography>Documents</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
           <HashLink
             smooth
-            to="/home#rogdollcatnft"
-            style={{ textDecoration: "none" }}
+            to="/home#Documents"
+            style={{ textDecoration: "none", color: "white" }}
           >
-            <ListItemText className={classes.listText} primary={"UTILITIES"} />
+            <Box
+              onClick={toggleDrawer(anchor, false)}
+              sx={{ fontFamily: "Helvetice-Bold" }}
+            >
+              Audit
+            </Box>
           </HashLink>
-        </ListItem>
 
-        <ListItem
-          button
-          style={{
-            justifyContent: "center"
-          }}
-        >
-          <ListItemText className={classes.listText} primary={"DOCUMENTS"} />
-        </ListItem>
+          <a
+            href="https://www.flipsnack.com/E77D96AA9F7/ragdoll-cat-nft-rdc-roadmap.html"
+            target="_blank"
+            style={{ textDecoration: "none", color: "white" }}
+          >
+            <Box
+              onClick={toggleDrawer(anchor, false)}
+              sx={{ fontFamily: "Helvetice-Bold" }}
+            >
+              RoadMap
+            </Box>
+          </a>
 
-        <ListItem
-          button
-          style={{
-            justifyContent: "center"
-          }}
+          <a
+            href="https://www.flipsnack.com/E77D96AA9F7/rdc-whitepaper.html"
+            target="_blank"
+            style={{ textDecoration: "none", color: "white" }}
+          >
+            <Box
+              onClick={toggleDrawer(anchor, false)}
+              sx={{ fontFamily: "Helvetice-Bold" }}
+            >
+              Whitepaper
+            </Box>
+          </a>
+
+          {Documents.map((value) => {
+            return (
+              <HashLink
+                to={`/${value.toLowerCase()}`}
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                <Box
+                  onClick={toggleDrawer(anchor, false)}
+                  sx={{ fontFamily: "Helvetice-Bold" }}
+                >
+                  {value}
+                </Box>
+              </HashLink>
+            );
+          })}
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion
+        expanded={expanded === `panel${4}`}
+        onChange={handleChange(`panel${4}`)}
+        sx={{
+          fontFamily: "Helvetica-Bold",
+          background: "transparent",
+          color: "white",
+          marginTop: "10px",
+        }}
+      >
+        <AccordionSummary
+          aria-controls={`panel${4}d-content`}
+          id={`panel${1}d-header`}
         >
-          <ListItemText className={classes.listText} primary={"COMMUNITY"} />
-        </ListItem>
-        {/* )
-        )} */}
-      </List>
+          <Typography>Community</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          {community.map((value, i) => {
+            return (
+              <a
+                href={communityLinks[i]}
+                target="_blank"
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                <Box
+                  onClick={toggleDrawer(anchor, false)}
+                  sx={{ fontFamily: "Helvetice-Bold" }}
+                >
+                  {value}
+                </Box>
+              </a>
+            );
+          })}
+        </AccordionDetails>
+      </Accordion>
+
       <Box mb={1} display="flex" justifyContent="center">
         {account ? (
           <Box
@@ -239,13 +500,13 @@ export default function Header() {
               border: "3px solid #FF8504",
               borderRadius: "30px",
               margin: "auto",
-              boxShadow: 4
+              boxShadow: 4,
             }}
           >
             <Box
               zIndex={1}
               sx={{
-                cursor: "pointer"
+                cursor: "pointer",
               }}
               bgcolor="transparent"
               width="180px"
@@ -260,7 +521,7 @@ export default function Header() {
               alignItems="center"
               onClick={() => connect()}
             >
-              CONNECT WALLET login
+              CONNECT WALLET
               <ArrowForwardIosIcon fontSize="small" />
             </Box>
           </Box>
@@ -268,6 +529,12 @@ export default function Header() {
       </Box>
     </div>
   );
+
+  const GetgnrlsiteData = useSelector(
+    (state) => state.adminDashboard_red.GetgnrlsiteData
+  );
+  console.log("GetgnrlData Responce is", GetgnrlsiteData);
+
   return (
     <>
       <Box
@@ -287,22 +554,30 @@ export default function Header() {
             display="flex"
             justifyContent="space-between"
             alignItems="center"
-            pl={matches ? 0 : 5}
-            pr={matches ? 0 : 5}
           >
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-            >
+            <Box>
               <HashLink
                 smooth
                 to="/home#home"
                 style={{ textDecoration: "none" }}
               >
-                <Box>
-                  <img src="/images/logo.png" width="50%" height="50%" />
-                </Box>
+                {GetgnrlsiteData ? (
+                  <div>
+                    {GetgnrlsiteData.map((item, index) => {
+                      return (
+                        <Box>
+                          <img
+                            src={API + "/uploads/" + item.image}
+                            width="50%"
+                            height="50%"
+                          />
+                        </Box>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div>Loading...</div>
+                )}
               </HashLink>
             </Box>
             <Box
@@ -312,8 +587,7 @@ export default function Header() {
             >
               <Box
                 display="flex"
-                justifyContent="space-around"
-                // flexBasis={matches1 ? "0px" : "70%"}
+                justifyContent="space-between"
                 alignItems="center"
               >
                 <Hidden mdDown>
@@ -333,11 +607,6 @@ export default function Header() {
                     </Box>
                   </HashLink>
 
-                  {/* <HashLink
-                    smooth
-                    to="/home#about"
-                    style={{ textDecoration: "none" }}
-                  > */}
                   <Box pr={2} fontFamily="Helvetice-Bold" zIndex="1">
                     <Button
                       id="demo-customized-button"
@@ -347,6 +616,7 @@ export default function Header() {
                       sx={{
                         color: "white",
                         textTransform: "capitalize",
+                        fontFamily: "Helvetice-Bold",
                         fontSize: "15px",
                       }}
                       onClick={handleClick}
@@ -363,104 +633,22 @@ export default function Header() {
                       open={open}
                       onClose={handleClose}
                     >
-                      <HashLink
-                        smooth
-                        to="/home#NFT Marketplace"
-                        style={{ textDecoration: "none", color: "white" }}
-                      >
-                        <MenuItem onClick={handleClose} disableRipple>
-                          NFT Marketplace
-                        </MenuItem>
-                      </HashLink>
-
-                      <HashLink
-                        smooth
-                        to="/home#Tokenomics"
-                        style={{ textDecoration: "none", color: "white" }}
-                      >
-                        <MenuItem onClick={handleClose} disableRipple>
-                          Tokenomics
-                        </MenuItem>
-                      </HashLink>
-
-                      <HashLink
-                        smooth
-                        to="/home#Public Presale"
-                        style={{ textDecoration: "none", color: "white" }}
-                      >
-                        <MenuItem onClick={handleClose} disableRipple>
-                          Public Presale
-                        </MenuItem>
-                      </HashLink>
-
-                      <HashLink
-                        smooth
-                        to="/home#Dev Team"
-                        style={{ textDecoration: "none", color: "white" }}
-                      >
-                        <MenuItem onClick={handleClose} disableRipple>
-                          Dev Team
-                        </MenuItem>
-                      </HashLink>
-
-                      <HashLink
-                        smooth
-                        to="/home#Blog"
-                        style={{ textDecoration: "none", color: "white" }}
-                      >
-                        <MenuItem onClick={handleClose} disableRipple>
-                          Blog
-                        </MenuItem>
-                      </HashLink>
-
-                      <HashLink
-                        smooth
-                        to="/home#about"
-                        style={{ textDecoration: "none", color: "white" }}
-                      >
-                        <MenuItem onClick={handleClose} disableRipple>
-                          About
-                        </MenuItem>
-                      </HashLink>
-
-                      <HashLink
-                        smooth
-                        to="/home#private presale"
-                        style={{ textDecoration: "none", color: "white" }}
-                      >
-                        <MenuItem onClick={handleClose} disableRipple>
-                          Private Presale
-                        </MenuItem>
-                      </HashLink>
-
-                      <HashLink
-                        smooth
-                        to="/home#listings"
-                        style={{ textDecoration: "none", color: "white" }}
-                      >
-                        <MenuItem onClick={handleClose} disableRipple>
-                          Listing
-                        </MenuItem>
-                      </HashLink>
-
-                      <HashLink
-                        smooth
-                        to="/home#road map"
-                        style={{ textDecoration: "none", color: "white" }}
-                      >
-                        <MenuItem onClick={handleClose} disableRipple>
-                          RoadMap
-                        </MenuItem>
-                      </HashLink>
+                      {QuickLinks.map((value) => {
+                        return (
+                          <HashLink
+                            smooth
+                            to={`/home#${value}`}
+                            style={{ textDecoration: "none", color: "white" }}
+                          >
+                            <MenuItem onClick={handleClose} disableRipple>
+                              {value}
+                            </MenuItem>
+                          </HashLink>
+                        );
+                      })}
                     </StyledMenu>
                   </Box>
-                  {/* </HashLink> */}
 
-                  {/* <HashLink
-                    smooth
-                    to="/home#rogdollcatnft"
-                    style={{ textDecoration: "none" }}
-                  > */}
                   <Box pr={2} fontFamily="Helvetice-Bold" zIndex="1">
                     <Button
                       id="demo-customized-button"
@@ -470,6 +658,7 @@ export default function Header() {
                       sx={{
                         color: "white",
                         textTransform: "capitalize",
+                        fontFamily: "Helvetice-Bold",
                         fontSize: "15px",
                       }}
                       onClick={handleClick2}
@@ -486,31 +675,49 @@ export default function Header() {
                       open={open2}
                       onClose={handleClose2}
                     >
-                      <MenuItem onClick={handleClose2} disableRipple>
-                        RDC Token
-                      </MenuItem>
-                      <MenuItem onClick={handleClose2} disableRipple>
-                        NFT Marketplace
-                      </MenuItem>
+                      <HashLink
+                        smooth
+                        to="/home#Token Info"
+                        style={{ textDecoration: "none", color: "white" }}
+                      >
+                        <MenuItem onClick={handleClose2} disableRipple>
+                          RDC Token
+                        </MenuItem>
+                      </HashLink>
+                      <HashLink
+                        smooth
+                        to="/home#NFT Marketplace"
+                        style={{ textDecoration: "none", color: "white" }}
+                      >
+                        <MenuItem onClick={handleClose2} disableRipple>
+                          NFT Marketplace
+                        </MenuItem>
+                      </HashLink>
+                      {utility.map((value) => {
+                        return (
+                          <HashLink
+                            smooth
+                            to="/home#rogdollcatnft"
+                            style={{ textDecoration: "none", color: "white" }}
+                          >
+                            <MenuItem onClick={handleClose2} disableRipple>
+                              {value}
+                            </MenuItem>
+                          </HashLink>
+                        );
+                      })}
 
-                      <MenuItem onClick={handleClose2} disableRipple>
-                        Live Cat Marketplace
-                      </MenuItem>
-
-                      <MenuItem onClick={handleClose2} disableRipple>
-                        Cat Lovers Community
-                      </MenuItem>
-
-                      <MenuItem onClick={handleClose2} disableRipple>
-                        Stake & Earn
-                      </MenuItem>
-
-                      <MenuItem onClick={handleClose2} disableRipple>
-                        Blog Post
-                      </MenuItem>
+                      <HashLink
+                        smooth
+                        to="/home#Blog"
+                        style={{ textDecoration: "none", color: "white" }}
+                      >
+                        <MenuItem onClick={handleClose2} disableRipple>
+                          Blog Post
+                        </MenuItem>
+                      </HashLink>
                     </StyledMenu>
                   </Box>
-                  {/* </HashLink> */}
 
                   <Box pr={2} fontFamily="Helvetice-Bold" zIndex="1">
                     <Button
@@ -521,6 +728,7 @@ export default function Header() {
                       sx={{
                         color: "white",
                         textTransform: "capitalize",
+                        fontFamily: "Helvetice-Bold",
                         fontSize: "15px",
                       }}
                       onClick={handleClick3}
@@ -539,7 +747,7 @@ export default function Header() {
                     >
                       <HashLink
                         smooth
-                        to="/home#documents"
+                        to="/home#Documents"
                         style={{ textDecoration: "none", color: "white" }}
                       >
                         <MenuItem onClick={handleClose3} disableRipple>
@@ -547,55 +755,39 @@ export default function Header() {
                         </MenuItem>
                       </HashLink>
 
-                      <HashLink
-                        smooth
-                        to="/home#road map"
+                      <a
+                        href="https://www.flipsnack.com/E77D96AA9F7/ragdoll-cat-nft-rdc-roadmap.html"
+                        target="_blank"
                         style={{ textDecoration: "none", color: "white" }}
                       >
                         <MenuItem onClick={handleClose3} disableRipple>
-                          RoadMap
+                          Roadmap
                         </MenuItem>
-                      </HashLink>
+                      </a>
 
-                      <HashLink
-                        smooth
-                        to="/home#documents"
+                      <a
+                        href="https://www.flipsnack.com/E77D96AA9F7/rdc-whitepaper.html"
+                        target="_blank"
                         style={{ textDecoration: "none", color: "white" }}
                       >
                         <MenuItem onClick={handleClose3} disableRipple>
-                          WhitePaper
+                          Whitepaper
                         </MenuItem>
-                      </HashLink>
+                      </a>
 
-                      <HashLink
-                        smooth
-                        to="/faq"
-                        style={{ textDecoration: "none", color: "white" }}
-                      >
-                        <MenuItem onClick={handleClose3} disableRipple>
-                          FAQ
-                        </MenuItem>
-                      </HashLink>
-
-                      <HashLink
-                        smooth
-                        to="/business"
-                        style={{ textDecoration: "none", color: "white" }}
-                      >
-                        <MenuItem onClick={handleClose3} disableRipple>
-                          Business
-                        </MenuItem>
-                      </HashLink>
-
-                      <HashLink
-                        smooth
-                        to="/logo"
-                        style={{ textDecoration: "none", color: "white" }}
-                      >
-                        <MenuItem onClick={handleClose3} disableRipple>
-                          Logo
-                        </MenuItem>
-                      </HashLink>
+                      {Documents.map((value) => {
+                        return (
+                          <HashLink
+                            smooth
+                            to={`/${value.toLowerCase()}`}
+                            style={{ textDecoration: "none", color: "white" }}
+                          >
+                            <MenuItem onClick={handleClose3} disableRipple>
+                              {value}
+                            </MenuItem>
+                          </HashLink>
+                        );
+                      })}
                     </StyledMenu>
                   </Box>
 
@@ -608,6 +800,7 @@ export default function Header() {
                       sx={{
                         color: "white",
                         textTransform: "capitalize",
+                        fontFamily: "Helvetice-Bold",
                         fontSize: "15px",
                       }}
                       onClick={handleClick4}
@@ -624,28 +817,19 @@ export default function Header() {
                       open={open4}
                       onClose={handleClose4}
                     >
-                      <MenuItem onClick={handleClose4} disableRipple>
-                        Twitter
-                      </MenuItem>
-                      <MenuItem onClick={handleClose4} disableRipple>
-                        Telegram
-                      </MenuItem>
-
-                      <MenuItem onClick={handleClose4} disableRipple>
-                        Facebook
-                      </MenuItem>
-
-                      <MenuItem onClick={handleClose4} disableRipple>
-                        Instagram
-                      </MenuItem>
-
-                      <MenuItem onClick={handleClose4} disableRipple>
-                        YouTube
-                      </MenuItem>
-
-                      <MenuItem onClick={handleClose4} disableRipple>
-                        Bitcointalk
-                      </MenuItem>
+                      {community.map((value, i) => {
+                        return (
+                          <a
+                            href={communityLinks[i]}
+                            target="_blank"
+                            style={{ textDecoration: "none", color: "white" }}
+                          >
+                            <MenuItem onClick={handleClose4} disableRipple>
+                              {value}
+                            </MenuItem>
+                          </a>
+                        );
+                      })}
                     </StyledMenu>
                   </Box>
 
@@ -701,24 +885,71 @@ export default function Header() {
                       </Box>
                     </Box>
                   )}
-
-                  <Link to="/login" style={{textDecoration: 'none'}} >
-                    <Box
-                      pl={2}
-                      fontSize="15px"
-                      fontFamily="Helvetice-Bold"
-                      style={{
-                        textDecoration: "none",
-                        cursor: "pointer",
-                        color: "#ffffff",
-                        textTransform: "capitalize",
-                      }}
-                    >
-                      Login
-                    </Box>
-                  </Link>
                 </Hidden>
               </Box>
+              <Link to="/login" style={{ textDecoration: "none" }}>
+                <Box
+                  pl={2}
+                  fontSize="15px"
+                  fontFamily="Helvetice-Bold"
+                  style={{
+                    textDecoration: "none",
+                    cursor: "pointer",
+                    color: "#ffffff",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  Login
+                </Box>
+              </Link>
+
+              {/* <Box pr={2} fontFamily="Helvetice-Bold" zIndex="1">
+                <Button
+                  id="demo-customized-button"
+                  aria-controls={open5 ? "demo-customized-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open5 ? "true" : undefined}
+                  sx={{
+                    color: "white",
+                    textTransform: "capitalize",
+                    fontFamily: "Helvetice-Bold",
+                    fontSize: "15px",
+                  }}
+                  onClick={handleClick5}
+                  endIcon={<KeyboardArrowDownIcon />}
+                >
+                  Login
+                </Button>
+                <StyledMenu
+                  id="demo-customized-menu"
+                  MenuListProps={{
+                    "aria-labelledby": "demo-customized-button",
+                  }}
+                  anchorEl={anchorE5}
+                  open={open5}
+                  onClose={handleClose5}
+                >
+                  <a
+                    href="#"
+                    target="_blank"
+                    style={{ textDecoration: "none", color: "white" }}
+                  >
+                    <MenuItem onClick={handleClose4} disableRipple>
+                      edfcerafr
+                    </MenuItem>
+                  </a>
+
+                  <a
+                    href="#"
+                    target="_blank"
+                    style={{ textDecoration: "none", color: "white" }}
+                  >
+                    <MenuItem onClick={handleClose4} disableRipple>
+                      edfcerafr
+                    </MenuItem>
+                  </a>
+                </StyledMenu>
+              </Box> */}
 
               <Hidden mdUp>
                 {["left"].map((anchor) => (

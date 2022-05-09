@@ -35,6 +35,8 @@ import { forgotpass } from "../../redux/actions/authuser.js";
 
 const Signup = () => {
 
+
+
   const navigate = useNavigate();
 
   const [authloginMsg, setauthloginMsg] = useState("");
@@ -42,9 +44,6 @@ const Signup = () => {
 
   
   const loginMsg = useSelector((state) => state.Auth.data.msg);
-  // console.log("loginMsg");
-  // console.log(loginMsg);
-
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
@@ -155,7 +154,7 @@ const Signup = () => {
       }}
     >
       <BelowHead />
-      <Container>
+      <Container maxWidth="sm">
         <Box
           sx={{
             display: "flex",
@@ -173,7 +172,7 @@ const Signup = () => {
               fontFamily: "MilkyNice",
             }}
           >
-             Forgott Password?
+            Forgott Password?
           </Typography>
           <Box
             sx={{
@@ -241,10 +240,8 @@ const Signup = () => {
             <center>
               {emailerr ? <div style={errmsg}>{emailerr}</div> : null}
             </center>
-
-          
           </Box>
-         
+
           {/* **********Recaptcha code************ */}
           {/* <Box>
             <ReCAPTCHA

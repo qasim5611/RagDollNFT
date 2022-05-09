@@ -32,12 +32,15 @@ let token = localStorage.getItem("token");
 
 
 var initState = {
+  SignupMsg: "",
+  LoginMsg: "",
+
   isVotedBefore: "",
 
   ArticleData: "",
   Upvotes: [{}],
   Downvotes: [{}],
-  ErrMsg: "",
+
   Email: "",
 
   // auth: '',
@@ -55,7 +58,7 @@ var initState = {
     name: "",
     referral: "",
     refreshToken: "",
-    role:"",
+    role: "",
   },
   userDetail: "",
   userInfo: "",
@@ -81,17 +84,13 @@ const cookies = new Cookies();
       
 
     
-      // state.userDetail = action.payload.user._id
-      //   ? action.payload.user._id
-      //   : null;
-      // state.userInfo = action.payload.user;
-
-      // console.log("state.userDetail", state.userDetail);
       let date = new Date();
        let mydate = date.now;
       if (action.payload.jwtToken) {
         // localStorage.setItem("jwtToken", action.payload.jwtToken);
         cookies.set("jwtToken", action.payload.jwtToken )
+        cookies.set("myRole", action.payload.user.role);
+
         console.log(cookies.get("jwtToken")); // Pacman
       }
       // let tokens = localStorage.getItem("token");
@@ -119,7 +118,7 @@ const cookies = new Cookies();
 
       return {
         ...state,
-        data: action.payload,
+        LoginMsg: action.payload.msg,
       };
 
       break;
@@ -250,7 +249,7 @@ const cookies = new Cookies();
       return {
         ...state,
         // ErrMsg: action.payload.data ? action.payload.data : action.payload.data.msg,4
-        ErrMsg: action.payload.data.msg,
+        SignupMsg: action.payload.data.msg,
         // Email: action.payload.data.mailret,
       };
 

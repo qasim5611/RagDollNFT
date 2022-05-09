@@ -148,7 +148,7 @@ const [values, setValues] = useState({ token: "" });
       }}
     >
       <BelowHead />
-      <Container>
+      <Container maxWidth="sm">
         <Box
           sx={{
             display: "flex",
@@ -166,7 +166,7 @@ const [values, setValues] = useState({ token: "" });
               fontFamily: "MilkyNice",
             }}
           >
-            Enter Verification Code Here from gmail
+            Enter Code from gmail
           </Typography>
           <Box
             sx={{

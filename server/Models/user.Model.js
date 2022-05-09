@@ -43,7 +43,4 @@ userModelSchema.virtual("isVerified").get(function () {
   return !!(this.verified || this.passwordReset);
 });
 
-// const userModel = mongoose.model("user", userModelSchema);
-
-
 module.exports = mongoose.model("user", userModelSchema);

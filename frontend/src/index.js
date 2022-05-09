@@ -9,9 +9,9 @@ import CssBaseline from "@mui/material/CssBaseline";
 import reportWebVitals from "./reportWebVitals";
 import theme from "./theme";
 import { AppContextProvider } from "./utils";
-import './fonts/MilkyNice.ttf'
-import './fonts/MilkyNice-Clean.ttf';
-import './fonts/Helvetica-Bold-Font.ttf';
+import "./fonts/MilkyNice.ttf";
+import "./fonts/MilkyNice-Clean.ttf";
+import "./fonts/Helvetica-Bold-Font.ttf";
 
 import { Provider } from "react-redux";
 import store from "./redux/store";

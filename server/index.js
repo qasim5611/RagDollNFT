@@ -7,11 +7,15 @@ const app = express();
 const path = require("path");
 const cors = require("cors");
 
+const { uploadall } = require("./helpers/filehelper");
+
 app.use(cors());
 
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+
 
 const _dirname = path.resolve();
 app.use("uploads", express.static(path.join(_dirname, "uploads")));
@@ -55,57 +59,90 @@ var upload = multer({
 app.use("/uploads", express.static(path.join(_dirname, "uploads")));
 
 
-
-// Sign Up
-
-
-// Form Data
-
-
-let Article = require("./routes/form/Article");
-
-// app.post("/api/award/create", upload.single("image"), Award.Create);
-app.post("/saveArticle", upload.single("image"), Article.save_article);
-
-app.post("/upvoteCounter", Article.upvote_count);
-
-app.post("/CheckIsVoted", Article.isuser_voted);
-
-
-app.post("/downvoteCounter", Article.downvote_count);
-
-
-// app.post("/upvoteCounter", Article.upvote_count);
-
-// app.post("/Saveformdata", upload.single("image"), Article.create_form);
-
-// app.post("/update", upload.single("image"), Article.gupdate_form);
-
-// app.post("/deleteidBase", Article.del_form);
-
-app.get("/getArticle", Article.get_article);
-
-// User SignUp
-
-let Authenticate = require("./routes/form/Autherize/autherize");
-
+// Frontend Site Login System
+let Authenticate = require("./routes/Autherize/autherize");
 
 app.post("/register", Authenticate.register);
 app.get("/verify-email", Authenticate.verifyEmail);
 app.post("/authenticate", Authenticate.authenticate);
 app.post("/forgot-password", Authenticate.forgotPassword);
 app.post("/VerifyTokenforpass", Authenticate.verifyCode);
-
 app.post("/resetpassword", Authenticate.resetPassword);
 
+//Admin Dashboard SiteData Changes
+///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+let Admindash = require("./routes/adminDashboard/adminDashboard");
 
-// app.get("/*", function (req, res) {
-//   res.sendFile(path.join(__dirname, "./build/index2.html"), function (err) {
-//     if (err) {
-//       res.status(500).send(err);
-//     }
-//   });
-// });
+app.post("/setGeneral", upload.single("image"), Admindash.setGeneral);
+app.get("/getGeneralsett", Admindash.getGeneral);
+app.post("/setSocialLinks", Admindash.setSocialLinks);
+app.get("/getSocialLinks", Admindash.getSocialLinks);
+
+app.post("/setHomeBanner", upload.single("image"), Admindash.setHomeBanner);
+app.get("/getHomeBanner", Admindash.getHomeBanner);
+/////////////////////////////////////////////////////////////////
+app.post("/setNftPromote", uploadall.array("files"), Admindash.setNftPromote);
+app.get("/getNftPromoteRefresh", Admindash.getNftPromote);
+
+app.post("/setNftPopular", uploadall.array("files"), Admindash.setNftPopular);
+app.get("/getNftPopularRefresh", Admindash.getNftPopular);
+
+app.post("/setNftRecent", uploadall.array("files"), Admindash.setNftRecent);
+app.get("/getNftRecentRefresh", Admindash.getNftRecent);
+
+
+app.post("/setNftBanner", uploadall.array("files"), Admindash.setNftBanner);
+app.get("/getNftBannerRefresh", Admindash.getNftBanner);
+
+app.post("/updateAboutUs", Admindash.updateAboutUs);
+app.get("/getAboutUsRefresh", Admindash.getAboutUs);
+
+
+app.post("/setHomeDocs", upload.single("image"), Admindash.setHomeDocs);
+app.get("/getHomeDocsRefresh", Admindash.getHomeDocs);
+app.get("/getHomeDocsbyid", Admindash.getHomeDocsbyid);
+
+
+app.post("/setDocsHeading", Admindash.setDocsHeading);
+app.get("/getDocsHeadingRefresh", Admindash.getDocsHeading);
+
+app.post("/setHomeDocsHeading", Admindash.setHomeDocsHead);
+
+
+
+///////////////////////////////
+let AddServices = require("./routes/Homeservices/services");
+
+app.post("/addService", upload.single("image"), AddServices.addService);
+app.get("/getService", AddServices.getService);
+app.post("/deleteService", AddServices.deleteServiceByid);
+app.post("/updateService", upload.single("image"), AddServices.updateService);
+app.get("/getServiceByid", AddServices.getServicebyid);
+
+
+///////////////////////////////
+let Teams = require("./routes/TeamMember/team");
+
+app.post("/addMember", upload.single("image"), Teams.addMember);
+app.get("/getMember", Teams.getMember);
+app.post("/deleteMember", Teams.deleteMemberByid);
+app.post("/updateMember", upload.single("image"), Teams.updateMember);
+app.get("/getMemberByid", Teams.getMemberByid);
+
+
+
+///////////////////////////////
+let SiteBlogs = require("./routes/Blogs/blogs");
+
+app.post("/addBlog", upload.single("image"), SiteBlogs.addBlog);
+app.get("/getBlog", SiteBlogs.getBlog);
+app.post("/deleteBlog", SiteBlogs.deleteBlogByid);
+app.post("/updateBlog", upload.single("image"), SiteBlogs.updateBlog);
+app.get("/getBlogByid", SiteBlogs.getBlogByid);
+
+
+
 
 app.use(express.static("./build"));
 
@@ -114,7 +151,7 @@ app.use("*", (req, res) => {
 });
 
 connectDatabase();
-const PORT = process.env.PORT || 8072;
+const PORT = process.env.PORT || 8073;
 app.listen(PORT, function () {
   console.log("server is started on port " + PORT);
 });

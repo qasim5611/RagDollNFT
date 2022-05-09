@@ -137,7 +137,7 @@ const ResetPass = () => {
       }}
     >
       <BelowHead />
-      <Container>
+      <Container maxWidth="sm">
         <Box
           sx={{
             display: "flex",

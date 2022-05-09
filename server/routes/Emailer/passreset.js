@@ -3,12 +3,12 @@ const nodemailer = require("nodemailer");
 // let testAccount = await nodemailer.createTestAccount();
 
 var smtpTransport = nodemailer.createTransport({
-  service: "gmail",
+  //  service: "gmail",
   host: "smtp.gmail.com",
   port: 587,
   // ssl:     true,
   secure: false,
-  requireTLS: true,
+  //  requireTLS: true,
   auth: {
     user: "qasimtahir5611@gmail.com",
     pass: "Qasim@1048576",
@@ -22,7 +22,7 @@ const sendmail = async (email, name, code) => {
     to: `${email}`,
     subject: "Please Vrifiy your Email account",
     html: `
-     <h3 style="font-family: cursive">Hy ${name} TechSchema wansts to Verify your Email by Token... </h3>
+     <h3 style="font-family: cursive">Hy ${name} RagDoll Cat NFT wansts to Verify your Email by Token... </h3>
      <h3>${code}</h3>`,
   };
   console.log(mailOptions);

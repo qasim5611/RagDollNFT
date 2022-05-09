@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AccountCircle } from "@mui/icons-material";
-import { Route, Navigate } from "react-router-dom";
-import history from "./../history/history.js";
-import { useNavigate } from "react-router-dom";
-
 import {
   Container,
   FormControl,
@@ -16,6 +12,7 @@ import {
   Paper,
   TextField,
   Typography,
+  useMediaQuery,
   Button,
 } from "@mui/material";
 import { Box } from "@mui/system";
@@ -31,49 +28,50 @@ import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ReCAPTCHA from "react-google-recaptcha";
+import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
+import "swiper/swiper.min.css";
+import { Autoplay, Navigation } from "swiper";
+import "swiper/modules/pagination/pagination.min.css";
+import { HashLink } from "react-router-hash-link";
+
+import { setSnackbar } from "../../redux/reducers/SnackbarReducer.js";
+import { useNavigate } from "react-router-dom";
+
+
+import Stack from "@mui/material/Stack";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+
 import { authuser } from "./../../redux/actions/authuser.js";
+import { isLogin } from "./../../Hooks/useAuth.js";
+import { myRole } from "./../../Hooks/useAuth.js";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const Signup = () => {
-
-  const navigate = useNavigate();
-
-  const [authloginMsg, setauthloginMsg] = useState("");
-
-
-  
-  const loginMsg = useSelector((state) => state.Auth.data.msg);
-  // console.log("loginMsg");
-  // console.log(loginMsg);
-
-
+  const banner = [
+    "banner 1",
+    "banner 2",
+    "banner 3",
+    "banner 4",
+    "banner 5",
+    "banner 6",
+  ];
+  const matches1 = useMediaQuery("(min-width:1050px)");
   React.useEffect(() => {
     window.scrollTo(0, 0);
-
   }, []);
 
-
-
-  
-
-
   let dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const errmsg = {
     color: "red",
     position: "relative",
     top: "-11px",
   };
-
-      // useEffect(() => {
-      //   setauthloginMsg(loginMsg);
-      // }, [loginMsg]);
-
-      if (loginMsg == "Login Successfull") {
-        // setauthloginMsg("");
-        setTimeout(() => {
-          navigate("/blog", { replace: true });
-        }, 5000);
-      }
 
   const [values, setValues] = useState({
     email: "",
@@ -121,7 +119,15 @@ const Signup = () => {
     return isvalid;
   };
 
-  const submitHandler = (e) => {
+  //  useEffect(() => {
+  //    // setauthloginMsg(loginMsg);
+  //    console.log(loginMsg);
+  //    if (loginMsg == "Password Not Correct") {
+  //      setMsgone(true);
+  //    }
+  //  }, [loginMsg]);
+
+  const Submithandler = (e) => {
     e.preventDefault();
 
     var isFormvalid = validate();
@@ -132,15 +138,95 @@ const Signup = () => {
       console.log("ok");
     }
   };
+  ////////////////////
+  const LoginMsg = useSelector((state) => state.Auth);
 
-   const [isRecapVerfid, setisRecapVerfid] = useState(false);
+  console.log(LoginMsg.LoginMsg, "loginMsg");
+if (LoginMsg.LoginMsg == "Password Not Correct") {
+  // dispatch(setSnackbar(true, "error", "Password Not Correct"));
+  toast.error("Password Not Correct!", {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+} else if (
+  LoginMsg.LoginMsg ==
+  "NOT Verified, Check Mail, We Already Have Send you Email"
+) {
+  // dispatch(setSnackbar(true, "info", "Password Not Correct"));
+    toast.info("NOT Verified, Check Mail, We Already Have Send you Email", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+} else if (LoginMsg.LoginMsg == "Login Successfull" && isLogin() === true && myRole() === 'Admin') {
+  // dispatch(setSnackbar(true, "success", "Login Successfull"));
+  toast.success("Admin Login Successfull", {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+  //  navigate(to="/blog");
+  navigate("/adminDashboard", { replace: true });
+}
+else if (LoginMsg.LoginMsg == "Login Successfull" && isLogin() === true && myRole() === 'User') {
+  // dispatch(setSnackbar(true, "success", "Login Successfull"));
+  toast.success("User Login Successfull", {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+  //  navigate(to="/blog");
+  navigate("/logo", { replace: true });
+}
+else if (LoginMsg.LoginMsg == "Not available email") {
+  // dispatch(setSnackbar(true, "error", "Not available email"));
+  toast.warn("Not available email", {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+}
+    const [isRecapVerfid, setisRecapVerfid] = useState(true);
+
+    function onChange(value) {
+
+      console.log("Captcha value:", value);
+      setisRecapVerfid(true);
+    }
 
 
-
-  function onChange(value) {
-    console.log("Captcha value:", value);
-    setisRecapVerfid(true);
-  }
+      // function onChange(e) {
+      //   e.preventDefault();
+      //   grecaptcha.ready(function () {
+      //     grecaptcha
+      //       .execute("6LeVHaAfAAAAAMtTBCfxxlHsJULQDAJP8OUJGQQl", { action: "submit" })
+      //       .then(function (token) {
+      //         setisRecapVerfid(true);
+      //         // Add your logic to submit to your backend server here.
+      //       });
+      //   });
+      // }
 
   return (
     <Box
@@ -151,7 +237,7 @@ const Signup = () => {
       }}
     >
       <BelowHead />
-      <Container>
+      <Container maxWidth="sm">
         <Box
           sx={{
             display: "flex",
@@ -231,6 +317,9 @@ const Signup = () => {
                 sx={{ ml: 1, flex: 1, color: "#903800" }}
                 placeholder="Enter Your Email"
                 onChange={handleChange("email")}
+                autoComplete
+                type="email"
+                required
               />
             </Paper>
             <center>
@@ -276,7 +365,7 @@ const Signup = () => {
           {/* **********Recaptcha code************ */}
           <Box>
             <ReCAPTCHA
-              sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+              sitekey="6LeVHaAfAAAAAMtTBCfxxlHsJULQDAJP8OUJGQQl"
               onChange={onChange}
             />
           </Box>
@@ -289,7 +378,7 @@ const Signup = () => {
           >
             <Button
               disabled={!isRecapVerfid}
-              onClick={submitHandler}
+              onClick={Submithandler}
               sx={{
                 border: "1.5px solid white",
                 borderRadius: "30px",
@@ -349,6 +438,47 @@ const Signup = () => {
             </Button>
           </Link>
         </Box>
+      </Container>
+
+      <Container>
+        <HashLink to="/#BuyRDC" smooth>
+          <Swiper
+            slidesPerView={1}
+            slidesPerGroup={1}
+            loop={true}
+            navigation={{
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+            }}
+            autoplay={{
+              delay: 2500,
+            }}
+            modules={[Navigation, Autoplay]}
+            className="mySwiper"
+          >
+            {banner.map((image) => {
+              return (
+                <SwiperSlide>
+                  <Box
+                    mt={5}
+                    display={matches1 ? "flex" : "none"}
+                    justifyContent="center"
+                  >
+                    <img src={`/images/970x90/${image}.jpg`} />
+                  </Box>
+
+                  <Box
+                    mt={5}
+                    justifyContent="center"
+                    display={matches1 ? "none" : "flex"}
+                  >
+                    <img src={`/images/730x90/${image}.jpg`} width="100%" />
+                  </Box>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+        </HashLink>
       </Container>
     </Box>
   );

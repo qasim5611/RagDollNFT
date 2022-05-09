@@ -1,8 +1,26 @@
 import { Box, Grid, Divider, Container } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import BelowHead from "../belowHead/belowHead";
-import React from 'react'
+import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
+import "swiper/swiper.min.css";
+import { Autoplay, Navigation } from "swiper";
+import "swiper/modules/pagination/pagination.min.css";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { HashLink } from "react-router-hash-link";
+import ForwardSharpIcon from "@mui/icons-material/ForwardSharp";
+
 export default function Buiness() {
+  const banner = [
+    "banner 1",
+    "banner 2",
+    "banner 3",
+    "banner 4",
+    "banner 5",
+    "banner 6"
+  ];
+  const matches1 = useMediaQuery("(min-width:1050px)");
+  // const matches2 = useMediaQuery("(min-Width:790px)");
   const buttonArrray = [
     "RDC token",
     "NFT marketplace",
@@ -12,10 +30,20 @@ export default function Buiness() {
     "referral",
     "promotion"
   ];
+  const content = [
+    "Buy RDC & Keep S For Better Future.",
+    "Create NFT & Sell To Get A Lifetime Of 5% Royalty.",
+    "5% Referral Reward From The Overall Profit Of Direct Referral.",
+    "Passive Income Opportunity By Company Ownership With RDC .",
+    "Best Referral Achiever Reward.",
+    "Atractive Staking Opportunities With A Compounding System.",
+    "Opportunity To Work With Us As Country/ Regional Manager Or, Brand Ambassador. (Contract With Us For More Details)",
+    "We Will Offer Continuously Different Attractive Opportunities, Stay With Us To Get More Updates. (Offer May Be Published On Our Official Social Media, Website, Or, Blog.)"
+  ];
 
   React.useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <Box
       sx={{
@@ -23,7 +51,7 @@ export default function Buiness() {
           "linear-gradient(180deg, rgba(255,189,117,1) 0%, rgba(255,197,134,1) 3%, rgba(255,203,146,1) 59%, rgba(255,250,246,1) 100%, rgba(255,255,255,1) 100%)"
       }}
       pt={11.5}
-      pb={4}
+      pb={3}
     >
       <BelowHead />
       <Container>
@@ -105,7 +133,7 @@ export default function Buiness() {
                 </Box>
               </Box>
 
-              <Box
+              {/* <Box
                 fontSize={{ md: "18px", xs: "14px" }}
                 fontFamily="Helvetica"
                 color="#371F00"
@@ -113,10 +141,10 @@ export default function Buiness() {
                 fontWeight="700"
               >
                 RDC Token
-              </Box>
+              </Box> */}
 
               <Box mt={1}>
-                <img src="/images/img.png" width="100%" />
+                <img src="/images/img.jpeg" width="100%" />
               </Box>
 
               <Box
@@ -125,22 +153,124 @@ export default function Buiness() {
                 fontFamily="Helvetica"
                 textAlign="justify"
               >
-                Contrary to popular belief, Lorem Ipsum is not simply random
-                text. It has roots in a piece of classical Latin literature from
-                45 BC, making it over 2000 years old. Richard McClintock, a
-                Latin professor at Hampen-Sydney College in Virginia, looked up
-                one of the more obscure Latin words, consectetur, from a Lorem
-                Ipsum passage, and going through the cites of the word in
-                classical literature, discovered the undoubtable source. Lore
-                Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus
-                Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero,
-                written in 45 BC. This book is a trea- tie on the theory of
-                ethics, very popular during the Renaissance. The first line of
-                Lorem Ipsum...
+                <Box component="p">
+                  When selling any NFT, 80% Amount will y~ to he seller's
+                  wallet, and 10% of the amount will go to the admin wallet,
+                  admin can change the wallet anytime from the dashboard. 5%
+                  will go to the Creator wallet, another 5% will distribute
+                  among all previous holders.
+                </Box>
+                <Box component="p">
+                  <span style={{ fontSize: "18px" }}>Example 1:</span> "A"
+                  Created an NFT to sell & "B" Bought it 80% of the money will
+                  go to A's wallet as an NFT Seller, 10% will go to Admin
+                  wallet, 5% will go again to A's account as he is the creator
+                  of the NFT, Another 5% will go again to A'S wallet as he is
+                  the only previous holder of the NFT,
+                </Box>
+                <Box component="p">
+                  <span style={{ fontSize: "18px" }}>Example 2:</span> When "B"
+                  Will sells the same NFT to "C" "B" will receive 80% amount as
+                  the seller; 10% will go to the admin wallet, 5% will go to "A"
+                  as he is the creator of the NFT. Another 5% will distribute
+                  between "A & B" as they both are the previous holder of the
+                  NFT.
+                </Box>
+                <Box component="p">
+                  <span style={{ fontSize: "18px" }}>Example 3:</span> Again
+                  when "C" Will sells the same NFT to "D". "C" will receive 80%
+                  amount as seller, 10% will go to the admin wallet, and 5% will
+                  go to "A" as he is the creator of the NFT. Another 5% will
+                  distribute Among "A, B & C" as they all are the previous
+                  holder of the NFT.
+                </Box>
+                <Box component="p">
+                  <span style={{ fontSize: "18px" }}>Example 4:</span> Now again
+                  when "D" Will selis the same NFT to "E", "D" will receive 80%
+                  amount as seller, 10% will go to the admin wallet, 5% will go
+                  to "A" as he is the creator of the NFT. Another 5% will
+                  distribute Among "A, B, C & D" as they all are the previous
+                  holders of the NFT.
+                </Box>
+                <Box component="p">
+                  Theprocess will continue like this: If 100th people buy the
+                  same NFT one after another, the 5% will be distributed among
+                  the all previous 99 holders: B0% to the last seller, 10% to
+                  the Admin wallet, And another 5% will go to the Creator wallet
+                  (The first person)
+                </Box>
+
+                <Box>
+                  {content.map((data) => {
+                    return (
+                      <Box display="flex" mb={1}>
+                        <ForwardSharpIcon
+                          sx={{ color: "orange", marginRight: "7px" }}
+                          fontSize="small"
+                        />
+                        <Box>{data}</Box>
+                      </Box>
+                    );
+                  })}
+                </Box>
               </Box>
             </Box>
           </Grid>
         </Grid>
+      </Container>
+
+      <Container>
+        <HashLink to="/#BuyRDC" smooth>
+          <Swiper
+            slidesPerView={1}
+            slidesPerGroup={1}
+            loop={true}
+            navigation={{
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev"
+            }}
+            autoplay={{
+              delay: 2500
+            }}
+            modules={[Navigation, Autoplay]}
+            className="mySwiper"
+          >
+            {banner.map((image) => {
+              return (
+                // <SwiperSlide>
+                //   <Box mt={4} textAlign="center">
+                //     <img
+                //       src={
+                //         matches1
+                //           ? `/images/970x90/${image}.jpg`
+                //           : matches2
+                //           ? `/images/730x90/${image}.jpg`
+                //           : `/images/320x100.jpg`
+                //       }
+                //     />
+                //   </Box>
+                // </SwiperSlide>
+                <SwiperSlide>
+                  <Box
+                    mt={4}
+                    display={matches1 ? "flex" : "none"}
+                    justifyContent="center"
+                  >
+                    <img src={`/images/970x90/${image}.jpg`} />
+                  </Box>
+
+                  <Box
+                    mt={4}
+                    justifyContent="center"
+                    display={matches1 ? "none" : "flex"}
+                  >
+                    <img src={`/images/730x90/${image}.jpg`} width="100%" />
+                  </Box>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+        </HashLink>
       </Container>
     </Box>
   );

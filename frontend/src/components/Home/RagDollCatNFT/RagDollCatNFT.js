@@ -1,10 +1,34 @@
+import React, { useState, useEffect, useContext } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import API from "./../../../redux/url.js";
+import axios from "axios";
+
 import { Box, Container, Grid, Typography, Button } from "@mui/material";
-import React from "react";
-import IGacha from "../../../images/IGacha.png";
-import IStacking from "../../../images/IStacking.png";
+
 import Bounce from "react-reveal/Bounce";
 import { Link } from "react-router-dom";
+
 export default function RagDollCatNFT() {
+
+  const dispatch = useDispatch();
+
+  const [service, setservice] = useState(false);
+
+  useEffect(() => {
+    // dispatch(getsocial());
+    axios.get(API + "/getService").then((res) => {
+      console.log("getService", res.data.user);
+
+      console.log(res.data.user);
+      // const getNftPromoteImages = getNftPromote ?  getNftPromote[0].files : getNftPromote;
+      setservice(res.data.user);
+    });
+  }, []);
+
+
+
+
+
   return (
     <Box
       style={{
@@ -12,356 +36,803 @@ export default function RagDollCatNFT() {
           "linear-gradient(180deg, rgba(255,189,117,1) 0%, rgba(255,250,246,1) 100%)",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "100% 100%",
-        backgroundSize: "cover"
+        backgroundSize: "cover",
       }}
     >
       <Container>
         <Box pt={3} pb={6}>
-          <Grid container alignItems="center">
-            <Grid item xs={12} lg={6} md={12} sm={12} order={{ xs: 2, sm: 1 }}>
-              <Bounce left>
-                <Box>
-                  <img
-                    alt=""
-                    style={{
-                      maxWidth: "600px",
-                      width: "100%"
-                    }}
-                    src={IGacha}
-                  />
-                </Box>
-              </Bounce>
-            </Grid>
-
-            <Grid item xs={12} lg={6} md={12} sm={12} order={{ xs: 2, sm: 1 }}>
-              <Bounce right>
-                <Box p={3}>
-                  <Typography
-                    sx={{
-                      fontFamily: "MilkyNice",
-                      fontSize: "33px",
-                      fontWeight: "700",
-                      color: "#371F00",
-                      py: "3%",
-                      px: "3%"
-                    }}
-                  >
-                    RAGDOLL CAT NFT MARKETPLACE
-                  </Typography>
-                  <Typography
-                    sx={{
-                      textAlign: "justify",
-                      fontSize: "17px",
-                      fontFamily: 'Helvetice-Bold',
-                      color: "#903800",
-                      py: "1%",
-                      px: "3%"
-                    }}
-                  >
-                    If you are familiar with NFT or, you have interest to
-                    create, buy, sell, store or, collect NFTs, "Ragdoll Cat NFT
-                    marketplace" is your gateway to participating in the
-                    purchase and sale of these digital assets - from art to
-                    music to entire virtual worlds. Think of NFT marketplaces as
-                    your Amazon of the digital realm. User-friendly platform to
-                    buy/sell NFTs. Create and sell your NFT & get 5% Lifetime
-                    royalty from every sale. Buy NFTs to get passive income.
-                  </Typography>
-
-                  <Box
-                    border="3px solid #FF8504"
-                    borderRadius="30px"
-                    mt={2}
-                    sx={{ width: "fit-content" }}
-                  >
-                    <Link to="/login" style={{ textDecoration: "none" }}>
-                      <Button
-                        sx={{
-                          textTransform: "capitalize",
-                          border: "1.5px solid white",
-                          borderRadius: "30px",
-                          width: "200px",
-                          backgroundImage:
-                            "linear-gradient(to right, #FF8605, #FFAB24)",
-                          fontSize: { xs: "12px", md: "14px" },
-                          // fontWeight: "700",
-                          fontFamily: 'Helvetice-Bold',
-
-                          boxShadow: 4
-                        }}
-                      >
-                        View NFT Marketplace
-                      </Button>
-                    </Link>
-                  </Box>
-                </Box>
-              </Bounce>
-            </Grid>
-          </Grid>
-
-          <Grid container alignItems="center" mt={3}>
-            <Grid item xs={12} lg={6} md={12} sm={12} order={{ xs: 2, sm: 1 }}>
-              <Bounce left>
-                <Box p={3}>
-                  <Typography
-                    sx={{
-                      fontFamily: "MilkyNice",
-                      fontSize: "33px",
-                      fontWeight: "700",
-                      color: "#371F00",
-                      py: "3%",
-                      px: "3%",
-                      textAlign: "right"
-                    }}
-                  >
-                    LIVE CAT MARKETPLACE
-                  </Typography>
-                  <Typography
-                    sx={{
-                      textAlign: "justify",
-                      fontSize: "17px",
-                      // fontWeight: "500",
-                      fontFamily: 'Helvetice-Bold',
-                      color: "#903800",
-                      py: "1%",
-                      px: "3%"
-                    }}
-                  >
-                    Ragdoll Cat "Live Cat Marketplace", which is a
-                    non-profitable social business model marketplace or platform
-                    that believes to provide forever homes to cats. This is the
-                    first and only place where you can seek cats for sale or buy
-                    cats for sale online worldwide from respected and informed
-                    registered cat breeders. Just visit our live cat marketplace
-                    now to buy or sell cats from anywhere. The easiest way to
-                    find your cat's nearby buyer/seller.
-                  </Typography>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "right"
-                    }}
-                  >
-                    <Box
-                      border="3px solid #FF8504"
-                      borderRadius="30px"
-                      mt={2}
-                      sx={{ width: "fit-content" }}
+        <>
+          {service ? (<div>
+            { service.map((item, index) =>{
+              {/* if (index >= 2 && index < 3) */}
+              if (index >= 0 && index < 1) {
+                return (
+                  <Grid container alignItems="center" key={index}>
+                    <Grid
+                      item
+                      xs={12}
+                      lg={6}
+                      md={12}
+                      sm={12}
+                      order={{ xs: 2, sm: 1 }}
                     >
-                      <Link to="/login" style={{ textDecoration: "none" }}>
-                        <Button
-                          sx={{
-                            textTransform: "capitalize",
-                            border: "1.5px solid white",
-                            borderRadius: "30px",
-                            width: "200px",
-                            backgroundImage:
-                              "linear-gradient(to right, #FF8605, #FFAB24)",
-                            fontSize: { xs: "12px", md: "14px" },
-                            // fontWeight: "700",
-                            fontFamily: 'Helvetice-Bold',
-                            boxShadow: 4,
-                            textAlign: "right"
-                          }}
-                        >
-                          Live Cat Marketplace
-                        </Button>
-                      </Link>
-                    </Box>
-                  </Box>
-                </Box>
-              </Bounce>
-            </Grid>
+                      <Bounce left>
+                        <Box>
+                          <img
+                            alt=""
+                            style={{
+                              maxWidth: "600px",
+                              width: "100%",
+                            }}
+                            src={API + "/uploads/" + item.image}
+                          />
+                        </Box>
+                      </Bounce>
+                    </Grid>
 
-            <Grid item xs={12} lg={6} md={12} sm={12} order={{ xs: 1, sm: 2 }}>
-              <Bounce right>
-                <Box>
-                  <img
-                    alt=""
-                    style={{
-                      maxWidth: "600px",
-                      width: "100%"
-                    }}
-                    src={IStacking}
-                  />
-                </Box>
-              </Bounce>
-            </Grid>
-          </Grid>
-
-          <Grid container alignItems="center" mt={4}>
-            <Grid item xs={12} lg={6} md={12} sm={12}>
-              <Bounce left>
-                <Box>
-                  <img
-                    alt=""
-                    style={{
-                      maxWidth: "600px",
-                      width: "100%"
-                    }}
-                    src={IGacha}
-                  />
-                </Box>
-              </Bounce>
-            </Grid>
-
-            <Grid item xs={12} lg={6} md={12} sm={12}>
-              <Bounce right>
-                <Box p={3}>
-                  <Typography
-                    sx={{
-                      fontFamily: "MilkyNice",
-                      fontSize: "33px",
-                      fontWeight: "700",
-                      color: "#371F00",
-                      py: "3%",
-                      px: "3%"
-                    }}
-                  >
-                    CAT LOVERS COMMUNITY
-                  </Typography>
-                  <Typography
-                    sx={{
-                      textAlign: "justify",
-                      fontSize: "17px",
-                      // fontWeight: "500",
-                      fontFamily: 'Helvetice-Bold',
-                      color: "#903800",
-                      py: "1%",
-                      px: "3%"
-                    }}
-                  >
-                    Welcome to the absolute community of cat lovers. Cats are
-                    one of the most beautiful creatures made by god. They are
-                    cute, small, gentle animals. People who are loving cats are
-                    highly invited to visit our cat lover community. Just share
-                    ideas, experiences, difficulties, solutions & cute pictures
-                    of cats. Discuss and ask any questions related to cats. If
-                    you really a cat lover, just join the community now!
-                  </Typography>
-
-                  <Box
-                    border="3px solid #FF8504"
-                    borderRadius="30px"
-                    mt={3}
-                    sx={{ width: "fit-content" }}
-                  >
-                    <Link to="/login" style={{ textDecoration: "none" }}>
-                      <Button
-                        sx={{
-                          textTransform: "capitalize",
-                          border: "1.5px solid white",
-                          borderRadius: "30px",
-                          width: "200px",
-                          backgroundImage:
-                            "linear-gradient(to right, #FF8605, #FFAB24)",
-                          fontSize: { xs: "12px", md: "14px" },
-                          // fontWeight: "700",
-                          fontFamily: 'Helvetice-Bold',
-                          boxShadow: 4
-                        }}
-                      >
-                        Cat Lovers Community
-                      </Button>
-                    </Link>
-                  </Box>
-                </Box>
-              </Bounce>
-            </Grid>
-          </Grid>
-
-          <Grid container alignItems="center" mt={4}>
-            <Grid item xs={12} lg={6} md={12} sm={12} order={{ xs: 2, sm: 1 }}>
-              <Bounce left>
-                <Box p={3}>
-                  <Typography
-                    sx={{
-                      fontFamily: "MilkyNice",
-                      fontSize: "33px",
-                      fontWeight: "700",
-                      color: "#371F00",
-                      py: "3%",
-                      px: "3%",
-                      textAlign: "right"
-                    }}
-                  >
-                    STAKE & EARN
-                  </Typography>
-                  <Typography
-                    sx={{
-                      // justifyContent: 'flex-start',
-                      textAlign: "justify",
-                      fontSize: "17px",
-                      // fontWeight: "500",
-                      fontFamily: 'Helvetice-Bold',
-                      color: "#903800",
-                      py: "1%",
-                      px: "3%"
-                    }}
-                  >
-                    Like a lot of effects in the cryptocurrency field, staking
-                    can be a complicated idea or a simple bone depending on how
-                    numerous situations of the understanding you want to
-                    unleash. For a lot of dealers and investors, knowing that
-                    staking is a way of earning prices for holding certain
-                    cryptocurrencies is the crucial takeaway. But indeed, if
-                    you're just looking to earn some staking prices, it's useful
-                    to understand at least a little bit about how and why it
-                    works the way it does. Stake your RDC to make the volume
-                    more without any mistrustfulness.
-                  </Typography>
-
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "right"
-                    }}
-                  >
-                    <Box
-                      border="3px solid #FF8504"
-                      borderRadius="30px"
-                      mt={2}
-                      sx={{ width: "fit-content" }}
+                    <Grid
+                      item
+                      xs={12}
+                      lg={6}
+                      md={12}
+                      sm={12}
+                      order={{ xs: 2, sm: 1 }}
                     >
-                      <Link to="/login" style={{ textDecoration: "none" }}>
-                        <Button
-                          sx={{
-                            textTransform: "capitalize",
-                            border: "1.5px solid white",
-                            borderRadius: "30px",
-                            width: "200px",
-                            backgroundImage:
-                              "linear-gradient(to right, #FF8605, #FFAB24)",
-                            fontSize: { xs: "12px", md: "14px" },
-                            // fontWeight: "700",
-                            fontFamily: 'Helvetice-Bold',
-                            boxShadow: 4
-                          }}
-                        >
-                          Stake & Earn
-                        </Button>
-                      </Link>
-                    </Box>
-                  </Box>
-                </Box>
-              </Bounce>
-            </Grid>
+                      <Bounce right>
+                        <Box p={3}>
+                          <Typography
+                            sx={{
+                              fontFamily: "MilkyNice",
+                              fontSize: "33px",
+                              fontWeight: "700",
+                              color: "#371F00",
+                              py: "3%",
+                              px: "3%",
+                            }}
+                          >
+                            {item.title}
+                          </Typography>
+                          <Typography
+                            sx={{
+                              textAlign: "justify",
+                              fontSize: "17px",
+                              fontFamily: "Helvetice-Bold",
+                              color: "#903800",
+                              py: "1%",
+                              px: "3%",
+                            }}
+                            dangerouslySetInnerHTML={{
+                              __html: item.description && item.description,
+                            }}
+                          ></Typography>
 
-            <Grid item xs={12} lg={6} md={12} sm={12} order={{ xs: 1, sm: 2 }}>
-              <Bounce right>
-                <Box>
-                  <img
-                    alt=""
-                    style={{
-                      maxWidth: "600px",
-                      width: "100%"
-                    }}
-                    src={IStacking}
-                  />
-                </Box>
-              </Bounce>
-            </Grid>
-          </Grid>
+                          <Box
+                            border="3px solid #FF8504"
+                            borderRadius="30px"
+                            mt={2}
+                            sx={{ width: "fit-content" }}
+                          >
+                            <Link
+                              to="/login"
+                              style={{ textDecoration: "none" }}
+                            >
+                              <Button
+                                sx={{
+                                  textTransform: "capitalize",
+                                  border: "1.5px solid white",
+                                  borderRadius: "30px",
+                                  width: "200px",
+                                  backgroundImage:
+                                    "linear-gradient(to right, #FF8605, #FFAB24)",
+                                  fontSize: { xs: "12px", md: "14px" },
+                                  // fontWeight: "700",
+                                  fontFamily: "Helvetice-Bold",
+
+                                  boxShadow: 4,
+                                }}
+                              >
+                                {item.btn}
+                              </Button>
+                            </Link>
+                          </Box>
+                        </Box>
+                      </Bounce>
+                    </Grid>
+                  </Grid>
+                );
+              }
+
+              else if (index >= 1 && index < 2) {
+                 return (
+                   <Grid container alignItems="center" key={index}>
+                     <Grid
+                       item
+                       xs={12}
+                       lg={6}
+                       md={12}
+                       sm={12}
+                       order={{ xs: 2, sm: 1 }}
+                     >
+                       <Bounce right>
+                         <Box p={3}>
+                           <Typography
+                             sx={{
+                               fontFamily: "MilkyNice",
+                               fontSize: "33px",
+                               fontWeight: "700",
+                               color: "#371F00",
+                               py: "3%",
+                               px: "3%",
+                             }}
+                           >
+                             {item.title}
+                           </Typography>
+                           <Typography
+                             sx={{
+                               textAlign: "justify",
+                               fontSize: "17px",
+                               fontFamily: "Helvetice-Bold",
+                               color: "#903800",
+                               py: "1%",
+                               px: "3%",
+                             }}
+                             dangerouslySetInnerHTML={{
+                               __html: item.description && item.description,
+                             }}
+                           ></Typography>
+
+                           <Box
+                             border="3px solid #FF8504"
+                             borderRadius="30px"
+                             mt={2}
+                             sx={{ width: "fit-content" }}
+                           >
+                             <Link
+                               to="/login"
+                               style={{ textDecoration: "none" }}
+                             >
+                               <Button
+                                 sx={{
+                                   textTransform: "capitalize",
+                                   border: "1.5px solid white",
+                                   borderRadius: "30px",
+                                   width: "200px",
+                                   backgroundImage:
+                                     "linear-gradient(to right, #FF8605, #FFAB24)",
+                                   fontSize: { xs: "12px", md: "14px" },
+                                   // fontWeight: "700",
+                                   fontFamily: "Helvetice-Bold",
+
+                                   boxShadow: 4,
+                                 }}
+                               >
+                                 {item.btn}
+                               </Button>
+                             </Link>
+                           </Box>
+                         </Box>
+                       </Bounce>
+                     </Grid>
+                     <Grid
+                       item
+                       xs={12}
+                       lg={6}
+                       md={12}
+                       sm={12}
+                       order={{ xs: 2, sm: 1 }}
+                     >
+                       <Bounce left>
+                         <Box>
+                           <img
+                             alt=""
+                             style={{
+                               maxWidth: "600px",
+                               width: "100%",
+                             }}
+                             src={API + "/uploads/" + item.image}
+                           />
+                         </Box>
+                       </Bounce>
+                     </Grid>
+                   </Grid>
+                 );
+              }
+               
+
+                 else if (index >= 2 && index < 3) {
+                return (
+                  <Grid container alignItems="center" key={index}>
+                    <Grid
+                      item
+                      xs={12}
+                      lg={6}
+                      md={12}
+                      sm={12}
+                      order={{ xs: 2, sm: 1 }}
+                    >
+                      <Bounce right>
+                        <Box p={3}>
+                          <Typography
+                            sx={{
+                              fontFamily: "MilkyNice",
+                              fontSize: "33px",
+                              fontWeight: "700",
+                              color: "#371F00",
+                              py: "3%",
+                              px: "3%",
+                            }}
+                          >
+                            {item.title}
+                          </Typography>
+                          <Typography
+                            sx={{
+                              textAlign: "justify",
+                              fontSize: "17px",
+                              fontFamily: "Helvetice-Bold",
+                              color: "#903800",
+                              py: "1%",
+                              px: "3%",
+                            }}
+                            dangerouslySetInnerHTML={{
+                              __html: item.description && item.description,
+                            }}
+                          ></Typography>
+
+                          <Box
+                            border="3px solid #FF8504"
+                            borderRadius="30px"
+                            mt={2}
+                            sx={{ width: "fit-content" }}
+                          >
+                            <Link
+                              to="/login"
+                              style={{ textDecoration: "none" }}
+                            >
+                              <Button
+                                sx={{
+                                  textTransform: "capitalize",
+                                  border: "1.5px solid white",
+                                  borderRadius: "30px",
+                                  width: "200px",
+                                  backgroundImage:
+                                    "linear-gradient(to right, #FF8605, #FFAB24)",
+                                  fontSize: { xs: "12px", md: "14px" },
+                                  // fontWeight: "700",
+                                  fontFamily: "Helvetice-Bold",
+
+                                  boxShadow: 4,
+                                }}
+                              >
+                                {item.btn}
+                              </Button>
+                            </Link>
+                          </Box>
+                        </Box>
+                      </Bounce>
+                    </Grid>
+                    <Grid
+                      item
+                      xs={12}
+                      lg={6}
+                      md={12}
+                      sm={12}
+                      order={{ xs: 2, sm: 1 }}
+                    >
+                      <Bounce left>
+                        <Box>
+                          <img
+                            alt=""
+                            style={{
+                              maxWidth: "600px",
+                              width: "100%",
+                            }}
+                            src={API + "/uploads/" + item.image}
+                          />
+                        </Box>
+                      </Bounce>
+                    </Grid>
+                  </Grid>
+                );
+
+
+                 }
+
+                 else if (index >= 3 && index < 4) {
+                     return (
+                       <Grid container alignItems="center" key={index}>
+                         <Grid
+                           item
+                           xs={12}
+                           lg={6}
+                           md={12}
+                           sm={12}
+                           order={{ xs: 2, sm: 1 }}
+                         >
+                           <Bounce left>
+                             <Box>
+                               <img
+                                 alt=""
+                                 style={{
+                                   maxWidth: "600px",
+                                   width: "100%",
+                                 }}
+                                 src={API + "/uploads/" + item.image}
+                               />
+                             </Box>
+                           </Bounce>
+                         </Grid>
+
+                         <Grid
+                           item
+                           xs={12}
+                           lg={6}
+                           md={12}
+                           sm={12}
+                           order={{ xs: 2, sm: 1 }}
+                         >
+                           <Bounce right>
+                             <Box p={3}>
+                               <Typography
+                                 sx={{
+                                   fontFamily: "MilkyNice",
+                                   fontSize: "33px",
+                                   fontWeight: "700",
+                                   color: "#371F00",
+                                   py: "3%",
+                                   px: "3%",
+                                 }}
+                               >
+                                 {item.title}
+                               </Typography>
+                               <Typography
+                                 sx={{
+                                   textAlign: "justify",
+                                   fontSize: "17px",
+                                   fontFamily: "Helvetice-Bold",
+                                   color: "#903800",
+                                   py: "1%",
+                                   px: "3%",
+                                 }}
+                                 dangerouslySetInnerHTML={{
+                                   __html: item.description && item.description,
+                                 }}
+                               ></Typography>
+
+                               <Box
+                                 border="3px solid #FF8504"
+                                 borderRadius="30px"
+                                 mt={2}
+                                 sx={{ width: "fit-content" }}
+                               >
+                                 <Link
+                                   to="/login"
+                                   style={{ textDecoration: "none" }}
+                                 >
+                                   <Button
+                                     sx={{
+                                       textTransform: "capitalize",
+                                       border: "1.5px solid white",
+                                       borderRadius: "30px",
+                                       width: "200px",
+                                       backgroundImage:
+                                         "linear-gradient(to right, #FF8605, #FFAB24)",
+                                       fontSize: { xs: "12px", md: "14px" },
+                                       // fontWeight: "700",
+                                       fontFamily: "Helvetice-Bold",
+
+                                       boxShadow: 4,
+                                     }}
+                                   >
+                                     {item.btn}
+                                   </Button>
+                                 </Link>
+                               </Box>
+                             </Box>
+                           </Bounce>
+                         </Grid>
+                       </Grid>
+                     );
+                   
+                 }
+
+
+                 else if (index >= 4 && index < 5) {
+                   return (
+                     <Grid container alignItems="center" key={index}>
+                       <Grid
+                         item
+                         xs={12}
+                         lg={6}
+                         md={12}
+                         sm={12}
+                         order={{ xs: 2, sm: 1 }}
+                       >
+                         <Bounce right>
+                           <Box p={3}>
+                             <Typography
+                               sx={{
+                                 fontFamily: "MilkyNice",
+                                 fontSize: "33px",
+                                 fontWeight: "700",
+                                 color: "#371F00",
+                                 py: "3%",
+                                 px: "3%",
+                               }}
+                             >
+                               {item.title}
+                             </Typography>
+                             <Typography
+                               sx={{
+                                 textAlign: "justify",
+                                 fontSize: "17px",
+                                 fontFamily: "Helvetice-Bold",
+                                 color: "#903800",
+                                 py: "1%",
+                                 px: "3%",
+                               }}
+                               dangerouslySetInnerHTML={{
+                                 __html: item.description && item.description,
+                               }}
+                             ></Typography>
+
+                             <Box
+                               border="3px solid #FF8504"
+                               borderRadius="30px"
+                               mt={2}
+                               sx={{ width: "fit-content" }}
+                             >
+                               <Link
+                                 to="/login"
+                                 style={{ textDecoration: "none" }}
+                               >
+                                 <Button
+                                   sx={{
+                                     textTransform: "capitalize",
+                                     border: "1.5px solid white",
+                                     borderRadius: "30px",
+                                     width: "200px",
+                                     backgroundImage:
+                                       "linear-gradient(to right, #FF8605, #FFAB24)",
+                                     fontSize: { xs: "12px", md: "14px" },
+                                     // fontWeight: "700",
+                                     fontFamily: "Helvetice-Bold",
+
+                                     boxShadow: 4,
+                                   }}
+                                 >
+                                   {item.btn}
+                                 </Button>
+                               </Link>
+                             </Box>
+                           </Box>
+                         </Bounce>
+                       </Grid>
+                       <Grid
+                         item
+                         xs={12}
+                         lg={6}
+                         md={12}
+                         sm={12}
+                         order={{ xs: 2, sm: 1 }}
+                       >
+                         <Bounce left>
+                           <Box>
+                             <img
+                               alt=""
+                               style={{
+                                 maxWidth: "600px",
+                                 width: "100%",
+                               }}
+                               src={API + "/uploads/" + item.image}
+                             />
+                           </Box>
+                         </Bounce>
+                       </Grid>
+                     </Grid>
+                   );
+
+                 }
+
+
+                 else if (index >= 5 && index < 6) {
+               return (
+                 <Grid container alignItems="center" key={index}>
+                   <Grid
+                     item
+                     xs={12}
+                     lg={6}
+                     md={12}
+                     sm={12}
+                     order={{ xs: 2, sm: 1 }}
+                   >
+                     <Bounce left>
+                       <Box>
+                         <img
+                           alt=""
+                           style={{
+                             maxWidth: "600px",
+                             width: "100%",
+                           }}
+                           src={API + "/uploads/" + item.image}
+                         />
+                       </Box>
+                     </Bounce>
+                   </Grid>
+
+                   <Grid
+                     item
+                     xs={12}
+                     lg={6}
+                     md={12}
+                     sm={12}
+                     order={{ xs: 2, sm: 1 }}
+                   >
+                     <Bounce right>
+                       <Box p={3}>
+                         <Typography
+                           sx={{
+                             fontFamily: "MilkyNice",
+                             fontSize: "33px",
+                             fontWeight: "700",
+                             color: "#371F00",
+                             py: "3%",
+                             px: "3%",
+                           }}
+                         >
+                           {item.title}
+                         </Typography>
+                         <Typography
+                           sx={{
+                             textAlign: "justify",
+                             fontSize: "17px",
+                             fontFamily: "Helvetice-Bold",
+                             color: "#903800",
+                             py: "1%",
+                             px: "3%",
+                           }}
+                           dangerouslySetInnerHTML={{
+                             __html: item.description && item.description,
+                           }}
+                         ></Typography>
+
+                         <Box
+                           border="3px solid #FF8504"
+                           borderRadius="30px"
+                           mt={2}
+                           sx={{ width: "fit-content" }}
+                         >
+                           <Link to="/login" style={{ textDecoration: "none" }}>
+                             <Button
+                               sx={{
+                                 textTransform: "capitalize",
+                                 border: "1.5px solid white",
+                                 borderRadius: "30px",
+                                 width: "200px",
+                                 backgroundImage:
+                                   "linear-gradient(to right, #FF8605, #FFAB24)",
+                                 fontSize: { xs: "12px", md: "14px" },
+                                 // fontWeight: "700",
+                                 fontFamily: "Helvetice-Bold",
+
+                                 boxShadow: 4,
+                               }}
+                             >
+                               {item.btn}
+                             </Button>
+                           </Link>
+                         </Box>
+                       </Box>
+                     </Bounce>
+                   </Grid>
+                 </Grid>
+               );
+                   
+                 }
+
+
+                 else if (index >= 6 && index < 7) {
+                   return (
+                     <Grid container alignItems="center" key={index}>
+                       <Grid
+                         item
+                         xs={12}
+                         lg={6}
+                         md={12}
+                         sm={12}
+                         order={{ xs: 2, sm: 1 }}
+                       >
+                         <Bounce right>
+                           <Box p={3}>
+                             <Typography
+                               sx={{
+                                 fontFamily: "MilkyNice",
+                                 fontSize: "33px",
+                                 fontWeight: "700",
+                                 color: "#371F00",
+                                 py: "3%",
+                                 px: "3%",
+                               }}
+                             >
+                               {item.title}
+                             </Typography>
+                             <Typography
+                               sx={{
+                                 textAlign: "justify",
+                                 fontSize: "17px",
+                                 fontFamily: "Helvetice-Bold",
+                                 color: "#903800",
+                                 py: "1%",
+                                 px: "3%",
+                               }}
+                               dangerouslySetInnerHTML={{
+                                 __html: item.description && item.description,
+                               }}
+                             ></Typography>
+
+                             <Box
+                               border="3px solid #FF8504"
+                               borderRadius="30px"
+                               mt={2}
+                               sx={{ width: "fit-content" }}
+                             >
+                               <Link
+                                 to="/login"
+                                 style={{ textDecoration: "none" }}
+                               >
+                                 <Button
+                                   sx={{
+                                     textTransform: "capitalize",
+                                     border: "1.5px solid white",
+                                     borderRadius: "30px",
+                                     width: "200px",
+                                     backgroundImage:
+                                       "linear-gradient(to right, #FF8605, #FFAB24)",
+                                     fontSize: { xs: "12px", md: "14px" },
+                                     // fontWeight: "700",
+                                     fontFamily: "Helvetice-Bold",
+
+                                     boxShadow: 4,
+                                   }}
+                                 >
+                                   {item.btn}
+                                 </Button>
+                               </Link>
+                             </Box>
+                           </Box>
+                         </Bounce>
+                       </Grid>
+                       <Grid
+                         item
+                         xs={12}
+                         lg={6}
+                         md={12}
+                         sm={12}
+                         order={{ xs: 2, sm: 1 }}
+                       >
+                         <Bounce left>
+                           <Box>
+                             <img
+                               alt=""
+                               style={{
+                                 maxWidth: "600px",
+                                 width: "100%",
+                               }}
+                               src={API + "/uploads/" + item.image}
+                             />
+                           </Box>
+                         </Bounce>
+                       </Grid>
+                     </Grid>
+                   );
+
+                   
+                 }
+
+
+                 else if (index >= 7 && index < 8) {
+
+                   return (
+                     <Grid container alignItems="center" key={index}>
+                       <Grid
+                         item
+                         xs={12}
+                         lg={6}
+                         md={12}
+                         sm={12}
+                         order={{ xs: 2, sm: 1 }}
+                       >
+                         <Bounce left>
+                           <Box>
+                             <img
+                               alt=""
+                               style={{
+                                 maxWidth: "600px",
+                                 width: "100%",
+                               }}
+                               src={API + "/uploads/" + item.image}
+                             />
+                           </Box>
+                         </Bounce>
+                       </Grid>
+
+                       <Grid
+                         item
+                         xs={12}
+                         lg={6}
+                         md={12}
+                         sm={12}
+                         order={{ xs: 2, sm: 1 }}
+                       >
+                         <Bounce right>
+                           <Box p={3}>
+                             <Typography
+                               sx={{
+                                 fontFamily: "MilkyNice",
+                                 fontSize: "33px",
+                                 fontWeight: "700",
+                                 color: "#371F00",
+                                 py: "3%",
+                                 px: "3%",
+                               }}
+                             >
+                               {item.title}
+                             </Typography>
+                             <Typography
+                               sx={{
+                                 textAlign: "justify",
+                                 fontSize: "17px",
+                                 fontFamily: "Helvetice-Bold",
+                                 color: "#903800",
+                                 py: "1%",
+                                 px: "3%",
+                               }}
+                               dangerouslySetInnerHTML={{
+                                 __html: item.description && item.description,
+                               }}
+                             ></Typography>
+
+                             <Box
+                               border="3px solid #FF8504"
+                               borderRadius="30px"
+                               mt={2}
+                               sx={{ width: "fit-content" }}
+                             >
+                               <Link
+                                 to="/login"
+                                 style={{ textDecoration: "none" }}
+                               >
+                                 <Button
+                                   sx={{
+                                     textTransform: "capitalize",
+                                     border: "1.5px solid white",
+                                     borderRadius: "30px",
+                                     width: "200px",
+                                     backgroundImage:
+                                       "linear-gradient(to right, #FF8605, #FFAB24)",
+                                     fontSize: { xs: "12px", md: "14px" },
+                                     // fontWeight: "700",
+                                     fontFamily: "Helvetice-Bold",
+
+                                     boxShadow: 4,
+                                   }}
+                                 >
+                                   {item.btn}
+                                 </Button>
+                               </Link>
+                             </Box>
+                           </Box>
+                         </Bounce>
+                       </Grid>
+                     </Grid>
+                   );
+                   
+                 }
+            } ) }
+          </div>) : (<div>Loading...</div>) }
+        </>
+         
+
+         
         </Box>
       </Container>
     </Box>
