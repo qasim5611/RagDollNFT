@@ -312,7 +312,7 @@ useEffect(() => {
                       <Box>
                         <img
                           src={API + "/uploads/" + item.image}
-                          // src="/images/homeLogo.gif"
+                  
                           width="100%"
                         />
                       </Box>

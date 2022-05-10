@@ -12,8 +12,8 @@ import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
 import { useParams } from "react-router-dom";
 import { Box,  Grid } from "@mui/material";
 
-import "./create.css";
-import "./animate.css";
+import "./../create.css";
+import "./../style.css";
 import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
 import { basic, complex, formatting } from "../../misc/buttonList.js";

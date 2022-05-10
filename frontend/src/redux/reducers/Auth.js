@@ -196,39 +196,7 @@ const cookies = new Cookies();
 
       break;
 
-    case UPVOTE_SET:
-      console.log(action.payload.data);
-      console.log(action.payload.data[0].outputupdated);
-
-      return {
-        ...state,
-        Upvotes: action.payload.data[0].outputupdated,
-        isVotedBefore: action.payload.data[0].msg,
-      };
-
-      break;
-
-    case ISUSER_VOTED:
-      console.log(action.payload.data);
-
-      return {
-        ...state,
-        isVotedBefore: action.payload.data.msg,
-      };
-
-      break;
-
-    case DOWNVOTE_SET:
-      console.log(action.payload.data);
-      console.log(action.payload.data[0].outputupdated);
-
-      return {
-        ...state,
-        Downvotes: action.payload.data[0].outputupdated,
-      };
-
-      break;
-    case CLEAR_STATE:
+  case CLEAR_STATE:
       console.log("ClearState", action.payload.data);
       return {
         ...state,
@@ -255,46 +223,6 @@ const cookies = new Cookies();
 
       break;
 
-    case GET_FORMS:
-      console.log("reducer run", action.payload);
-      console.log("reducer run", action.payload.status);
-
-      return {
-        ...state,
-        DBFormdata: action.payload,
-      };
-
-      break;
-
-    case ARTICLE_SVE:
-      console.log("article reducer run", action.payload);
-
-      // return {
-      //   ...state,
-      //   ArticleData: action.payload,
-      // };
-
-      break;
-
-    case DELETE_FORM:
-      console.log("data in reducer for delete action", action.payload._id);
-      let filterStudents = state.DBFormdata.filter(
-        (item) => item._id !== action.payload._id
-      );
-      console.log("filterStudents", filterStudents);
-      return {
-        ...state,
-        //  DBFormdata: [...DBFormdata, filterStudents],
-        DBFormdata: filterStudents,
-      };
-
-      break;
-
-    case FORM_UPDATE:
-      // state.companyEditMsg = "Company Successfully Edited";
-      console.log("Company Successfully Edited");
-
-      break;
 
     default:
       break;

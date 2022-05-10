@@ -28,7 +28,9 @@ import DevTeam from "./DevTeam/DevTeam.jsx";
 import DevteamCreate from "./DevTeam/DevteamCreate.jsx";
 import DevteamUpdate from "./DevTeam/DevteamUpdate.jsx";
 
-
+import RoadMap from "./RoadMap/Roadmap.jsx";
+import RoadmapCreate from "./RoadMap/RoadmapCreate.jsx";
+import RoadmapUpdate from "./RoadMap/RoadmapUpdate.jsx";
 
 import Blogs from "./Blogs/Blog.jsx";
 import BlogsCreate from "./Blogs/BlogCreate.jsx";
@@ -84,7 +86,9 @@ export default () => {
           <Route path="/appsetting/list/devteamcreate" element={<DevteamCreate />} />
           <Route path="/appsetting/list/devteamUpdate/:id" element={<DevteamUpdate />} />
 
-         
+         <Route path="/appsetting/list/roadmap" element={<RoadMap />} />
+          <Route path="/appsetting/list/roadmapCreate" element={<RoadmapCreate />} />
+          <Route path="/appsetting/list/roadmapUpdate/:id" element={<RoadmapUpdate />} />
 
 
           <Route path="/appsetting/list/homebanner" element={<PrivateRoute><HomeBanner /></PrivateRoute>} />

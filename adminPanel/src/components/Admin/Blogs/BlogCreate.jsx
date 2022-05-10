@@ -10,8 +10,8 @@ import { FormControlLabel } from "@mui/material";
 import ImageUploading from "react-images-uploading";
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
 
-import "./create.css";
-// import "./animate.css";
+import "./../style.css";
+import "./../create.css";
 import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
 import { basic, complex, formatting } from "../../misc/buttonList.js";

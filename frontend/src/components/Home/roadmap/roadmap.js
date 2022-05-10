@@ -1,3 +1,8 @@
+import React, { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+import API from "./../../../redux/url.js";
+import axios from "axios";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
@@ -7,6 +12,17 @@ import Bounce from "react-reveal/Bounce";
 import SwiperFile from "./swiper";
 export default () => {
   const matches = useMediaQuery("(min-width:950px)");
+
+const [general, setgeneral] = useState(false);
+
+useEffect(() => {
+  axios.get(API + "/getRoadmap").then((res) => {
+    console.log("getRoadmap", res.data.user);
+    console.log(res.data.user);
+    setgeneral(res.data.user);
+  });
+}, []);
+
 
   return (
     <Box>

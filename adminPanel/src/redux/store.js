@@ -8,6 +8,8 @@ import { adminDashboard_red } from "./reducers/adminDashboard_red";
 import { ServicesReducer } from "./reducers/ServicesReducer";
 import { TeamReducer } from "./reducers/TeamReducer";
 import { BlogReducer } from "./reducers/BlogReducer";
+import { RoadmapReducer } from "./reducers/RoadmapReducer";
+
 
 
 
@@ -22,6 +24,7 @@ let AllReducers = combineReducers({
   ServicesReducer,
   TeamReducer,
   BlogReducer,
+  RoadmapReducer,
 });
 
 let store = createStore(AllReducers, applyMiddleware(thunk));

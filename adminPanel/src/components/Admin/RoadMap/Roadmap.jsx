@@ -12,6 +12,7 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import { Row, Col } from "reactstrap";
 import "./../style.css";
 import "./../create.css";
+// import "./animate.css";
 import { confirmAlert } from "react-confirm-alert"; // Import
 
 import "react-confirm-alert/src/react-confirm-alert.css"; 
@@ -49,7 +50,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
-import { deleteMemberByid } from "../../../redux/actions/Team_action.js";
+import { deleteRoadmapByid } from "../../../redux/actions/Roadmap_action.js";
 
 import API from "../../../redux/url.js";
 import axios from "axios";
@@ -58,7 +59,7 @@ const cookies = new Cookies();
 
 
 
-const DevTeam = () => {
+const Roadmap = () => {
   const dispatch = useDispatch();
 
 
@@ -75,24 +76,24 @@ const DevTeam = () => {
   };
 
   
-  const isMemberDeleted = useSelector(
-    (state) => state.TeamReducer.isMemberDeleted
+  const isRoadmapDeleted = useSelector(
+    (state) => state.RoadmapReducer.isRoadmapDeleted
   );
 
-  console.log("isMemberDeleted");
-  console.log(isMemberDeleted);
+  console.log("isRoadmapDeleted");
+  console.log(isRoadmapDeleted);
 
 
 
   useEffect(() => {
-    axios.get(API + "/getMember").then((result) => {
-      console.log("getMember");
+    axios.get(API + "/getRoadmap").then((result) => {
+      console.log("getRoadmap");
       console.log(result.data);
 
       setArticleList(result.data.user);
       setArticleList2(result.data.user);
     });
-  }, [isMemberDeleted]);
+  }, [isRoadmapDeleted]);
 
 
 
@@ -147,7 +148,7 @@ const DevTeam = () => {
       buttons: [
         {
           label: "Yes",
-          onClick: () => deleteMember(_id),
+          onClick: () => deleteRoadmap(_id),
         },
         {
           label: "No",
@@ -157,8 +158,8 @@ const DevTeam = () => {
   };
 
 
-  const deleteMember = (id) => {
-    dispatch(deleteMemberByid(id));
+  const deleteRoadmap = (id) => {
+    dispatch(deleteRoadmapByid(id));
   };
 
 
@@ -178,7 +179,7 @@ const DevTeam = () => {
 
         <Row className="table-header">
           <Col md="4">
-            <h2 class="section-title">All Team Members</h2>
+            <h2 class="section-title">All RoadMaps</h2>
           </Col>
           <Col md="8">
             <form class="form-inline form-searchbar" action="#">
@@ -186,21 +187,20 @@ const DevTeam = () => {
                 <input
                   type="text"
                   class="form-control"
-                  placeholder="Search Member.."
+                  placeholder="Search Roadmap.."
                   onChange={searchTextField}
                   style={{ width: "100%" }}
                 />
               </div>
-              <NavLink to="/adminDashboard/appsetting/list/devteamcreate">
+              <NavLink to="/adminDashboard/appsetting/list/roadmapCreate">
                 <button
                   type="submit"
                   class="btn btn-default"
                   style={{ padding: "10px" }}
                 >
-                  Add Team Member
+                  Add RoadMap
                 </button>
               </NavLink>
-          
             </form>
           </Col>
         </Row>
@@ -215,11 +215,10 @@ const DevTeam = () => {
                   <tbody>
                     <tr>
                       <th class="active">S#</th>
-                      <th class="active">Member Name</th>
-                      <th class="active">Designation</th>
-                  
-                      <th class="active">Member Pic</th>
-                 
+                      <th class="active">RoadMap Title</th>
+                      <th class="active">RoadMap List</th>
+
+                      <th class="active">RoadMap Image</th>
 
                       <th class="active" style={{ width: "300px" }}>
                         Action
@@ -231,8 +230,37 @@ const DevTeam = () => {
                         <tr>
                           <td>{ind + 1}</td>
                           <td>{item.title && item.title}</td>
-                        
-                          <td>{item.desg && item.desg}</td>
+                          <td>
+                            <p>
+                              {item.maplists ? (
+                                <div>
+                                  {item.maplists.map((item, i) => {
+                                    return (
+                                      <p
+                                        key={i}
+                                        style={{
+                                          width: "30%",
+                                          float: "left",
+                                          backgroundColor: "#dbf1ff",
+                                          borderRadius: "15px",
+                                          color: "black",
+                                          padding: "3px 7px",
+                                          margin: "0px 4px 3px 0px",
+                                          border: "1px #101924 solid",
+                                          textAlign: "center",
+                                        }}
+                                      >
+                                        {item}
+                                      </p>
+                                    );
+                                  })}
+                                </div>
+                              ) : (
+                                <div>Loading...</div>
+                              )}
+                            </p>
+                          </td>
+
                           <td>
                             <img
                               src={API + "/uploads/" + item.image}
@@ -241,14 +269,12 @@ const DevTeam = () => {
                             />
                           </td>
 
-                       
                           <td style={{ textAlign: "center" }}>
                             <Link
-                              to={`/adminDashboard/appsetting/list/devteamUpdate/${item._id}`}
+                              to={`/adminDashboard/appsetting/list/roadmapUpdate/${item._id}`}
                             >
                               <ModeEditIcon />
                             </Link>
-                         
 
                             <DeleteForeverIcon
                               onClick={() => submit(item._id)}
@@ -270,4 +296,4 @@ const DevTeam = () => {
   );
 };
 
-export default DevTeam;
+export default Roadmap;

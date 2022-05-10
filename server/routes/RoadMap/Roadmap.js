@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-const HomeBlogs = require("../../Models/adminDashboard/HomeBlogs.Model");
+const HomeRoadmap = require("../../Models/adminDashboard/HomeRoadmap.Model");
 
 
 const jwt_secret_key = "123456789abcdefghijklmnopqrstuvwxyz";
@@ -14,28 +14,29 @@ var crypto = require("crypto");
 
 var jwt = require("jsonwebtoken");
 
-const blogs = {
+const Roadmap = {
   // import sendEmail from "./../../services/EmailSender/sendmail";
-  addBlog: async function (req, res) {
+  addRoadmap: async function (req, res) {
     try {
-      let { title, auther, date, image, description } = req.body;
+      let { title, maplist, image } = req.body;
       // let image ;
+      console.log(maplist.split(","), "-->1");
+      let maplists = maplist.split(",", "-->");
 
+      console.log("maplists", maplists);
       if (req.file) image = req.file.filename;
 
       // The data is valid and new we can register the user
-      let newUser = new HomeBlogs({
+      let newUser = new HomeRoadmap({
         title,
-        auther,
-        date,
-        description,
+        maplists: maplist.split(","),
         image,
       });
 
       let result = await newUser.save();
 
       return res.send({
-        msg: "Blog Added Successfully",
+        msg: "RoadMap Added Successfully",
         result,
       });
     } catch (err) {
@@ -43,10 +44,10 @@ const blogs = {
     }
   },
 
-  getBlog: async function (req, res) {
+  getRoadmap: async function (req, res) {
     try {
       console.log(req.body);
-      const user = await HomeBlogs.find();
+      const user = await HomeRoadmap.find();
 
       // return res.json(user);
       return res.send({
@@ -58,8 +59,8 @@ const blogs = {
     }
   },
 
-  deleteBlogByid: async function (req, res) {
-    let find = await HomeBlogs.findById(req.body.id);
+  deleteRoadmapByid: async function (req, res) {
+    let find = await HomeRoadmap.findById(req.body.id);
 
     if (find) {
       await find.delete();
@@ -73,28 +74,32 @@ const blogs = {
     }
   },
 
-  updateBlog: async function (req, res) {
-    console.log(req.body.idtoUpdate);
-    let data = Object.assign({}, req.body);
-    let user_id = req.body.idtoUpdate;
-    let image;
-    if (req.file) {
-      image = req.file.filename;
-      data.image = image;
-    }
-    // if (data.isFeatured) {
-    //   data.isFeatured == "on"
-    //     ? (data.isFeatured = true)
-    //     : (data.isFeatured = false);
-    // }
+  updateRoadmap: async function (req, res) {
+        let { title, maplist, image } = req.body;
+         let user_id = req.body.idtoUpdate;
+        // let image ;
+        console.log(maplist.split(","), "-->1");
+        let maplists = maplist.split(",", "-->");
 
-    let isupdate = await HomeBlogs.findOneAndUpdate({ _id: user_id }, data, {
+        console.log("maplists");
+        console.log(maplists);
+
+        if (req.file) image = req.file.filename;
+
+        // The data is valid and new we can register the user
+        let data = {
+          title,
+          maplists: maplist.split(","),
+          image,
+        };
+        
+    let isupdate = await HomeRoadmap.findOneAndUpdate({ _id: user_id }, data, {
       isNew: true,
     });
 
     if (isupdate) {
       return res.send({
-        msg: "Blog Updated Successfully",
+        msg: "Roadmap Updated Successfully",
         isupdate,
       });
     }
@@ -103,11 +108,12 @@ const blogs = {
   },
 
 
-  getBlogByid: async function (req, res) {
+
+  getRoadmapByid: async function (req, res) {
     try {
       console.log("req", req.query.id);
 
-      const user = await HomeBlogs.find().where("_id").equals(req.query.id);
+      const user = await HomeRoadmap.find().where("_id").equals(req.query.id);
 
       return res.send({
         msg: "Find Successfully",
@@ -118,9 +124,7 @@ const blogs = {
     }
   },
 
-
-
   //////////////////////////////////
 };
 
-module.exports = blogs;
+module.exports = Roadmap;

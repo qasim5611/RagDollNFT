@@ -27,7 +27,6 @@ schema.virtual("isExpired").get(function () {
 schema.virtual("isActive").get(function () {
   return !this.revoked && !this.isExpired;
 });
-// const refreshTokenModel = mongoose.model("refreshToken", schema);
-// export default refreshTokenModel;
+
 
 module.exports = mongoose.model("refreshToken", schema);

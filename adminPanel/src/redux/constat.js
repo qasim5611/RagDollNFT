@@ -82,3 +82,6 @@ export let CREATE_BLOGS = "CREATE_BLOGS";
 export let DELETE_BLOG = "DELETE_BLOG";
 export let UPDATE_BLOG = "UPDATE_BLOG";
 
+export let CREATE_ROADMAP = "CREATE_ROADMAP";
+
+export let DELETE_ROADMAP = "DELETE_ROADMAP";

@@ -9,12 +9,12 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import icon1 from "../../../images/1.png";
-import icon2 from "../../../images/2.png";
-import icon3 from "../../../images/3.png";
-import icon4 from "../../../images/4.png";
-import icon5 from "../../../images/5.png";
-import icon6 from "../../../images/6.png";
+// import icon1 from "../../../images/1.png";
+// import icon2 from "../../../images/2.png";
+// import icon3 from "../../../images/3.png";
+// import icon4 from "../../../images/4.png";
+// import icon5 from "../../../images/5.png";
+// import icon6 from "../../../images/6.png";
 import tw from "../../../images/twwiter.png";
 import fb from "../../../images/fb.png";
 import insta from "../../../images/insta.png";

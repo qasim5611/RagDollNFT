@@ -1281,7 +1281,7 @@ function ResponsiveDrawer(props) {
               </ListItemIcon>
               <ListItemText>
                 <NavLink
-                  to="/adminDashboard/appsetting/list/aboutUs"
+                  to="/adminDashboard/appsetting/list/roadmap"
                   style={({ isActive }) =>
                     isActive ? activeStyle : activeClassName
                   }

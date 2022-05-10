@@ -9,6 +9,10 @@ import { useMediaQuery } from "@mui/material";
 import { FormControlLabel } from "@mui/material";
 import ImageUploading from "react-images-uploading";
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
+import Chip from "@mui/material/Chip";
+import Autocomplete from "@mui/material/Autocomplete";
+
+import Stack from "@mui/material/Stack";
 import "./../style.css";
 import "./../create.css";
 import SunEditor from "suneditor-react";
@@ -31,24 +35,11 @@ import {
   Button,
 } from "@mui/material";
 
-import IconButton from "@mui/material/IconButton";
-import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
-// Nested List starts
-import ListItemButton from "@mui/material/ListItemButton";
-import Collapse from "@mui/material/Collapse";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import List from "@mui/material/List";
-import { Link, NavLink } from "react-router-dom";
-// Nested List ends
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import { AiOutlineCalculator } from "react-icons/ai";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { createMember } from "../../../redux/actions/Team_action.js";
+import { createRoadmap } from "../../../redux/actions/Roadmap_action.js";
 
 import { getNftPopularRefresh } from "../../../redux/actions/adminDash_action.js";
 
@@ -59,8 +50,9 @@ const cookies = new Cookies();
 
 
 
-const DevteamCreate = () => {
+const RoadmapCreate = () => {
   const dispatch = useDispatch();
+
 
   useEffect(() => {
     // dispatch(getsocial());
@@ -68,25 +60,23 @@ const DevteamCreate = () => {
     // dispatch(getNftPopularRefresh());
   }, []);
 
+  let success = useSelector((state) => state.ServicesReducer);
+  console.log("success TeamReducer");
+  console.log(success);
 
-
-     let success = useSelector((state) => state.ServicesReducer);
-     console.log("success TeamReducer");
-     console.log(success);
- 
-     useEffect(() => {
-     if (success.msg) {
-       toast.success("Team Added Successfully", {
-         position: "top-right",
-         autoClose: 5000,
-         hideProgressBar: false,
-         closeOnClick: true,
-         pauseOnHover: true,
-         draggable: true,
-         progress: undefined,
-       });
-     }
-   }, [success]);
+  useEffect(() => {
+    if (success.msg) {
+      toast.success("Team Added Successfully", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }, [success]);
 
   const filesstyle = {
     color: "black",
@@ -103,27 +93,8 @@ const DevteamCreate = () => {
   };
 
 
-
-
-  // const [NftPopular, setNftPopular] = useState("");
-
-  // const NftPopular = useSelector((state) => state.adminDashboard_red);
-  // console.log("NftPopular.NftPopulard now");
-  // const getNftPopular = NftPopular.NftPopular;
-  // console.log(getNftPopular);
-  // const getNftPopularImages = getNftPopular
-  //   ? getNftPopular[0].files
-  //   : getNftPopular;
-
-  // const NftPopularID = getNftPopular ? getNftPopular[0]._id : getNftPopular;
-
-  // console.log("getNftPopularImages");
-  // console.log(getNftPopularImages);
-
   const [multipleFiles, setMultipleFiles] = useState("");
   const [multipleProgress, setMultipleProgress] = useState(0);
-
-
 
   const labls = {
     color: "#101924",
@@ -150,38 +121,35 @@ const DevteamCreate = () => {
   const check = useMediaQuery("(max-Width:900px)");
 
   const [titleerr, settitleerr] = useState("");
-  const [desgerr, setdesgerr] = useState("");
-  const [descerr, setdescerr] = useState("");
+  const [listerr, setlisterr] = useState("");
 
-
+  const [maplist, setmaplist] = useState(null);
 
   const [state, setState] = useState({
     title: "",
-    desg: "",
     image: null,
   });
-
-  
 
   const [images, setImages] = React.useState([]);
   const maxNumber = 69;
 
   const [general, setgeneral] = useState(false);
 
-  const [generalid, setgeneralid] = useState(false);
 
+  const onChangeHandler = (e) => {
+    if (e.target.name == "image") {
+      let val = e.target.files[0];
+      setState({ ...state, [e.target.name]: val });
+    } else {
+      setState({ ...state, [e.target.name]: e.target.value });
+    }
+  };
 
-  const [description, setDescription] = useState(null);
-
-
-    const onChangeHandler = (e) => {
-      if (e.target.name == "image") {
-        let val = e.target.files[0];
-        setState({ ...state, [e.target.name]: val });
-      } else {
-        setState({ ...state, [e.target.name]: e.target.value });
-      }
-    };
+  const onChangeHandlerMap = (value) => {
+      setmaplist(value);
+      console.log(value);
+      // onChange={(event, value) => console.log(value)}
+  }
 
   const editorRef = useRef < SunEditor > null;
   useEffect(() => {
@@ -190,70 +158,61 @@ const DevteamCreate = () => {
     console.log(editorRef.current?.editor.core);
   }, []);
 
-  const handleChange = (content) => {
-    setDescription(content); //Get Content Inside Editor
-  };
 
-
-    const onSubmit = (e) => {
-      e.preventDefault();
-      let obj = {
-        ...state,
-        // description,
-      };
-      
-
-       var isFormvalid = validate();
-       console.log("isvalid", isFormvalid);
-       window.scrollTo(0, 200);
-       if (isFormvalid) {
-         console.log(obj);
-      dispatch(createMember(obj));
-        //  alert("ok");
-       }
+  const onSubmit = (e) => {
+    e.preventDefault();
+    let obj = {
+      ...state,
+       maplist,
     };
 
+    var isFormvalid = validate();
+    console.log("isvalid", isFormvalid);
+    window.scrollTo(0, 200);
+    if (isFormvalid) {
+      console.log(obj);
+      dispatch(createRoadmap(obj));
+      //  alert("ok");
+    }
+  };
 
   const validate = () => {
     console.log("validate called");
     let isvalid = true;
 
-    if ( state.title.length < 5 || state.title.length > 50 || state.title.length == 0 ) {
+    if (
+      state.title.length < 5 ||
+      state.title.length > 50 ||
+      state.title.length == 0
+    ) {
       isvalid = false;
-      settitleerr("Name to be 5 to 50 characters long");
-      setdesgerr("");
-
-
-    }
-    else if ( state.desg.length < 5 || state.desg.length > 50 || state.desg.length == 0 ) {
+      settitleerr("Title to be 5 to 30 characters long");
+      setlisterr("");
+    } else if (maplist.length == 0) {
       isvalid = false;
       settitleerr("");
-      setdesgerr("Designation to be 5 to 50 characters long");
-     
-
+      setlisterr("List Should not Empty");
+    } else {
+      settitleerr("");
+      setlisterr("");
     }
-     else {
-       settitleerr("");
-       setdesgerr("");
-     }
 
     return isvalid;
   };
 
-  // const SubmitData = (e) => {
-  //   e.preventDefault();
 
-  //   window.scrollTo(0, 200);
-  //     // dispatch(setNftPopular(images));
-  //      const formData = new FormData();
-  //       formData.append('title', state.title);
-  //       for (let i = 0; i < multipleFiles.length; i++) {
-  //           formData.append('files', multipleFiles[i]);
-  //       }
-  //       await multipleFilesUpload(formData, mulitpleFileOptions);
-  //       props.getMultiple();
-
-  // };
+  const top100Films = [
+    { title: "Market Research" },
+    { title: "Project Concept" },
+    { title: "Website Launch" },
+    { title: "Whitepaper" },
+    { title: "Team Organization" },
+    { title: "Early Marketing Plan" },
+    { title: "Socials Development" },
+    { title: "Community Event" },
+    { title: "Contract Deployment" },
+    { title: "Awareness Campaign" },
+  ];
 
   return (
     <div class="content-wrapper">
@@ -264,7 +223,7 @@ const DevteamCreate = () => {
       >
         <Row className="table-header">
           <Col xs="12" md="12">
-            <h2 class="section-title">Add New Team Member</h2>
+            <h2 class="section-title">Add New RoadMap</h2>
           </Col>
         </Row>
         <div class="row">
@@ -272,7 +231,7 @@ const DevteamCreate = () => {
             <Col xs="12" md="9">
               <form>
                 <div class="form-group">
-                  <label for="pwd">Member Name</label>
+                  <label for="pwd">Title</label>
                   <input
                     type="text"
                     class="form-control"
@@ -285,25 +244,44 @@ const DevteamCreate = () => {
                     {titleerr ? <div style={errmsg}>{titleerr}</div> : null}
                   </center>
                 </div>
-
-                <div class="form-group">
-                  <label for="pwd"> Designation </label>
-                  <input
-                    name="desg"
-                    type="text"
-                    class="form-control"
-                    required
-                    onChange={onChangeHandler}
+                <Stack spacing={3} sx={{ width: "60%" }}>
+                  <Autocomplete
+                    sx={{ color: "black" }}
+                    multiple
+                    id="tags-filled"
+                    options={top100Films.map((option) => option.title)}
+                    // defaultValue={top100Films.map((option) => option.title)}
+                    // defaultValue={[top100Films[1].title]}
+                    freeSolo
+                    onChange={(event, value) => onChangeHandlerMap(value)}
+                    renderTags={(value, getTagProps) =>
+                      value.map((option, index) => (
+                        <Chip
+                          sx={{ color: "black" }}
+                          variant="outlined"
+                          label={option}
+                          {...getTagProps({ index })}
+                        />
+                      ))
+                    }
+                    renderInput={(params) => (
+                      <TextField
+                        sx={{ color: "black" }}
+                        {...params}
+                        variant="filled"
+                        label="RoadMap List"
+                        // placeholder="Favorites"
+                        name="list"
+                      />
+                    )}
                   />
                   <center>
-                    {desgerr ? <div style={errmsg}>{desgerr}</div> : null}
+                    {listerr ? <div style={errmsg}>{listerr}</div> : null}
                   </center>
-                </div>
-
-             
+                </Stack>
 
                 <div class="form-group">
-                  <label for="pwd">Member Image </label>
+                  <label for="pwd">Roadmap Image </label>
                   <input
                     type="file"
                     class="form-control"
@@ -313,17 +291,6 @@ const DevteamCreate = () => {
                   />
                 </div>
 
-                {/* <div class="form-group featuredItems_out">
-                    <input
-                      type="checkbox"
-                      class=""
-                      required
-                      name="isFeatured"
-                      id="featured_item"
-                      onChange={onChangeHandler}
-                    />
-                    <label for="featured_item">Featured</label>
-                  </div> */}
                 <button
                   type="submit"
                   class="btn btn-default"
@@ -335,7 +302,7 @@ const DevteamCreate = () => {
                     fontSize: 16,
                   }}
                 >
-                  Add Member
+                  Add RoadMap
                 </button>
               </form>
             </Col>
@@ -346,4 +313,4 @@ const DevteamCreate = () => {
   );
 };
 
-export default DevteamCreate;
+export default RoadmapCreate;

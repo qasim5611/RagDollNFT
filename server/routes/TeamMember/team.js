@@ -110,30 +110,7 @@ const team = {
     return res.json("Error On Updated");
   },
 
-  updateAboutUs: async function (req, res) {
-    // console.log(req.body.idtoUpdate);
-    let data = Object.assign({}, req.body);
-    // let user_id = req.body.idtoUpdate;
 
-    // if (data.isFeatured) {
-    //   data.isFeatured == "on"
-    //     ? (data.isFeatured = true)
-    //     : (data.isFeatured = false);
-    // }
-
-    // let isupdate = await HomeTeam.findOneAndUpdate({ _id: user_id }, data, {
-    //   isNew: true,
-    // });
-
-    // if (isupdate) {
-    //   return res.send({
-    //     msg: "Service Updated Successfully",
-    //     isupdate,
-    //   });
-    // }
-
-    return res.json("Successfuly Updated");
-  },
 
   getMemberByid: async function (req, res) {
     try {
@@ -150,42 +127,7 @@ const team = {
     }
   },
 
-  getFeaturedItems: async function (req, res) {
-    try {
-      const featuredItems = await Magzine.find({ isFeatured: true }).sort({
-        created_at: -1,
-      });
-
-      return res.json(featuredItems);
-    } catch (error) {
-      console.log(error);
-    }
-  },
-  getOneArticle: async function (req, res) {
-    try {
-      let data = Object.assign({}, req.body);
-      const article = await Magzine.find({ _id: data.id });
-
-      return res.json(article);
-    } catch (error) {
-      console.log(error);
-    }
-  },
-  getCategoryArticles: async function (req, res) {
-    try {
-      let data = Object.assign({}, req.body);
-      let articles = null;
-      if (data.category_id) {
-        articles = await Magzine.find({ category_id: data.category_id });
-      }
-      if (data.sub_category) {
-        articles = await Magzine.find({ sub_category: data.sub_category });
-      }
-      return res.json(articles);
-    } catch (error) {
-      console.log(error);
-    }
-  },
+ 
 
   //////////////////////////////////
 };

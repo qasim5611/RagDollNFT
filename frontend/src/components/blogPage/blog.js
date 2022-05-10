@@ -118,7 +118,6 @@ useEffect(() => {
             sm={12}
             sx={{
               color: "white",
-              // backgroundImage: "linear-gradient(to right, rgb(255 104 3 / 0%), rgb(255 131 6))",
               textAlign: 'center',
               padding: '10px',
               borderRadius: '5px'

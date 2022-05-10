@@ -11,8 +11,8 @@ import ImageUploading from "react-images-uploading";
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import { Row, Col } from "reactstrap";
-import "./style.css";
-import "./animate.css";
+import "./../style.css";
+import "./../create.css";
 
 
 import { confirmAlert } from "react-confirm-alert"; // Import

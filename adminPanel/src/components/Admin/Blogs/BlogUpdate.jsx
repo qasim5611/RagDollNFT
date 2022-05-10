@@ -11,8 +11,8 @@ import ImageUploading from "react-images-uploading";
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
 import { useParams } from "react-router-dom";
 
-import "./create.css";
-// import "./animate.css";
+import "./../style.css";
+import "./../create.css";
 import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
 import { basic, complex, formatting } from "../../misc/buttonList.js";
@@ -20,6 +20,7 @@ import { basic, complex, formatting } from "../../misc/buttonList.js";
 import { Row, Col } from "reactstrap";
 // Import Swiper styles
 // import 'swiper/css';
+
 import {
   Container,
   FormControl,

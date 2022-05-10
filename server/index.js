@@ -71,7 +71,7 @@ app.post("/resetpassword", Authenticate.resetPassword);
 
 //Admin Dashboard SiteData Changes
 ///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
+
 let Admindash = require("./routes/adminDashboard/adminDashboard");
 
 app.post("/setGeneral", upload.single("image"), Admindash.setGeneral);
@@ -141,6 +141,16 @@ app.post("/deleteBlog", SiteBlogs.deleteBlogByid);
 app.post("/updateBlog", upload.single("image"), SiteBlogs.updateBlog);
 app.get("/getBlogByid", SiteBlogs.getBlogByid);
 
+
+
+///////////////////////////////
+let SiteRoadMap = require("./routes/RoadMap/Roadmap");
+
+app.post("/addRoadmap", upload.single("image"), SiteRoadMap.addRoadmap);
+app.get("/getRoadmap", SiteRoadMap.getRoadmap);
+app.post("/deleteRoadmap", SiteRoadMap.deleteRoadmapByid);
+app.post("/updateRoadmap", upload.single("image"), SiteRoadMap.updateRoadmap);
+app.get("/getRoadmapByid", SiteRoadMap.getRoadmapByid);
 
 
 
